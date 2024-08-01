@@ -5,9 +5,11 @@ import java.util.List;
 
 public class Student {
     private final String studentId;
-    private final String studentName;
-    private List<Subject> mainSubjects = new ArrayList<Subject>();
-    private List<Subject> subSubjects = new ArrayList<Subject>();
+
+    private String studentName;
+    private List<Subject> mainSubjects;
+    private List<Subject> subSubjects;
+
 
 
     public Student(String studentId, String studentName, List<Subject> mainSubjects, List<Subject> subSubjects) {
@@ -27,8 +29,11 @@ public class Student {
         return studentName;
     }
 
-    public void studentRegistration() {
-
+    public List<Subject> getMainSubjects() {
+        return mainSubjects;
     }
 
+    public List<Subject> getSubSubjects() {
+        return subSubjects;
+    }
 }

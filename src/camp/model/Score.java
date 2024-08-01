@@ -1,13 +1,18 @@
 package camp.model;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class Score {
-    private String scoreId; // 회차 범위 1 ~ 10
+    private String studentId; // 수강생 고유번호
+    private int scoreId = 0; // 회차 범위 1 ~ 10
     private String subjectType; // 과목(필수 / 선택)
-    private int studentId; // 수강생 고유번호
     private int score; // 점수
     private char grade; // 등급
 
-    public Score(String seq, String subjectType, int studentId, int score, char grade) {
+    List<Score> scores = new ArrayList<>();
+
+    public Score(int seq, String subjectType, String studentId, int score, char grade) {
         this.scoreId = seq;
         this.subjectType = subjectType;
         this.studentId = studentId;
@@ -18,24 +23,24 @@ public class Score {
     public Score(){}
 
     // Getter
-    public String getScoreId() {
+    public int getScoreId() {
         return scoreId;
     }
     public String getSubjectType() { return subjectType; }
-    public int getStudentId() { return studentId; }
+    public String getStudentId() { return studentId; }
     public int getScore() { return score; }
     public char getGrade() { return grade; }
 
     // Setter
     public void setScoreId(){
-        this.scoreId = subjectType + "01";
+        this.scoreId = scoreId + 1;
     }
 
     public void setSubjectType(String subjectType){
         this.subjectType = subjectType;
     }
 
-    public void setStudentId(int studentId){
+    public void setStudentId(String studentId){
         this.studentId = studentId;
     }
 
@@ -49,10 +54,11 @@ public class Score {
 
 
 
-    public void scoreRegist(String studentId){
-        Score score = new Score();
+    public void scoreRegist(Student student, int score){
+        char grade = scoreToGrade(score, subjectType);
+        student.getStudentId();
 
-
+        //scores.add(new Score( seq, subjectType, studentId, score, scoreToGrade(score, subjectType)));
     }
 
     public char scoreToGrade(int score, String subjectType){

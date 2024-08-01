@@ -1,13 +1,22 @@
 package camp.model;
 
-public class Student {
-    private String studentId;
-    private String studentName;
+import java.util.ArrayList;
+import java.util.List;
 
-    public Student(String seq, String studentName) {
-        this.studentId = seq;
+public class Student {
+    private final String studentId;
+    private final String studentName;
+    private List<Subject> mainSubjects = new ArrayList<Subject>();
+    private List<Subject> subSubjects = new ArrayList<Subject>();
+
+
+    public Student(String studentId, String studentName, List<Subject> mainSubjects, List<Subject> subSubjects) {
+        this.studentId = studentId;
         this.studentName = studentName;
+        this.mainSubjects = mainSubjects;
+        this.subSubjects = subSubjects;
     }
+
 
     // Getter
     public String getStudentId() {
@@ -16,6 +25,10 @@ public class Student {
 
     public String getStudentName() {
         return studentName;
+    }
+
+    public void studentRegistration() {
+
     }
 
 }

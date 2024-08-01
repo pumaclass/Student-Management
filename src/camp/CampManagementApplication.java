@@ -16,6 +16,8 @@ import java.util.Scanner;
  * 프로젝트 구조를 변경하거나 기능을 추가해도 괜찮습니다!
  * 구현에 도움을 주기위한 Base 프로젝트입니다. 자유롭게 이용해주세요!
  */
+
+
 public class CampManagementApplication {
     // 데이터 저장소
     private static List<Student> studentStore;
@@ -39,6 +41,10 @@ public class CampManagementApplication {
 
     public static void main(String[] args) {
         setInitData();
+        System.out.println("조수현 완료");
+        System.out.println("이봉원 완료");
+        System.out.println("길용진 완료");
+        System.out.println("안동환 완료");
         try {
             displayMainView();
         } catch (Exception e) {

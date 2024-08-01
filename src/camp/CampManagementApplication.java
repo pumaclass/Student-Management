@@ -43,7 +43,6 @@ public class CampManagementApplication {
     public static void main(String[] args) {
         setInitData();
 
-
         try {
             displayMainView();
         } catch (Exception e) {
@@ -197,9 +196,7 @@ public class CampManagementApplication {
             } else {
                 for (int i = 0; i < ms; i++) {
                     while (true) {
-
-                        System.out.println("필수과목 [1: 'Java', 2: '객체지향', 3: 'Spring', 4: 'JPA', 4: 'MySQL']중에서 듣고싶은 과목을 선택하세요.");
-
+                        System.out.println("필수과목 [1: 'Java', 2: '객체지향', 3: 'Spring', 4: 'JPA', 5: 'MySQL']중에서 듣고싶은 과목을 선택하세요.");
                         String subject = sc.nextLine();
                         if(msNotSame.contains(subject)) {
                             System.out.println("이미 수강한 과목입니다. 다시 입력해주세요.");
@@ -374,7 +371,65 @@ public class CampManagementApplication {
     private static void createScore() {
         String studentId = getStudentId(); // 관리할 수강생 고유 번호
         System.out.println("시험 점수를 등록합니다...");
+
+        int studentIdx = 0;
+        // studentIdx로 학생 정보 조회
+        for(int i = 0 ; i < studentStore.size() ; i++){
+            if(studentStore.get(i).getStudentId().equals(studentId)){
+                studentIdx = i;
+            }
+        }
+
         // 기능 구현
+        // 테스트를 위한 코드
+        System.out.println("점수를 등록할 과목을 선택해주세요.");
+        // 선택한 필수과목 출력
+        for(int i = 0 ; i < studentStore.get(studentIdx).getMainSubjects().size() ; i++){
+            System.out.println(" - " + studentStore.get(studentIdx).getMainSubjects().get(i).getSubjectName());
+        }
+        // 선택한 선택과목 출력
+        for(int i = 0 ; i < studentStore.get(studentIdx).getSubSubjects().size() ; i++){
+            System.out.println(" - " + studentStore.get(studentIdx).getSubSubjects().get(i).getSubjectName());
+        }
+
+        sc.nextLine();
+        // 점수를 입력할 과목 입력
+        String selectSubject = sc.nextLine();
+
+        int nameIdx = 0; //  입력받은 과목 이름으로 subject 리스트에서 찾을 인덱스 번호
+
+        // 리스트에서 입력받은 과목이 몇 번째에 위치하는지 조회
+        for(int i = 0 ; i < subjectStore.size() ; i++){
+            String subject = subjectStore.get(i).getSubjectName();
+            if(subject.equals(selectSubject)) {
+                nameIdx = i;
+                break;
+            }
+        }
+
+        int scoreIdx = 0; // 학생의 해당과목이 몇 번째인지 확인하는 인덱스
+        // 해당 StudentID와 과목이 일치하는 리스트 중 가장 마지막 scoreId 조회
+        for(int i = scoreStore.size() - 1; i >= 0 ; i--){
+            if(scoreStore.get(i).getStudentId().equals(studentId)
+                && scoreStore.get(i).getSubjectName().equals(selectSubject)){
+                scoreIdx = scoreStore.get(i).getScoreId() + 1;
+                break;
+            }
+        }
+
+        // 과목 점수 입력
+        System.out.print("점수를 입력해주세요.");
+        int newScore = sc.nextInt();
+
+        // 점수 저장!
+        scoreStore.add(new Score(studentStore.get(studentIdx), scoreIdx, subjectStore.get(nameIdx), newScore));
+
+        System.out.println("StudentId : " + scoreStore.get(scoreStore.size() - 1).getStudentId());
+        System.out.println("scoreId : " + scoreStore.get(scoreStore.size() - 1).getScoreId());
+        System.out.println("subjectName : " + scoreStore.get(scoreStore.size() - 1).getSubjectName());
+        System.out.println("score : " + scoreStore.get(scoreStore.size() - 1).getScore());
+        System.out.println("grade : " + scoreStore.get(scoreStore.size() - 1).getGrade());
+
         System.out.println("\n점수 등록 성공!");
     }
 

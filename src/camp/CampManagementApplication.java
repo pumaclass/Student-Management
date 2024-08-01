@@ -170,11 +170,86 @@ public class CampManagementApplication {
 
     // 수강생 등록
     private static void createStudent() {
+        List<Subject> mainSubjects = new ArrayList<Subject>();
+        List<Subject> subSubjects = new ArrayList<Subject>();
+
         System.out.println("\n수강생을 등록합니다...");
         System.out.print("수강생 이름 입력: ");
         String studentName = sc.next();
         // 기능 구현 (필수 과목, 선택 과목)
-        Student student = new Student(sequence(INDEX_TYPE_STUDENT), studentName); // 수강생 인스턴스 생성 예시 코드
+        sc.nextLine();
+        while(true) {
+            System.out.println("원하는 필수 과목 수를 입력하세요.");
+            int ms = sc.nextInt();
+            sc.nextLine();
+            if (ms < 3) {
+                System.out.println("필수과목은 최소 3과목 이상 선택해야 합니다. 다시 입력해 주세요");
+            } else {
+                for (int i = 0; i < ms; i++) {
+                    while (true) {
+                        System.out.println("필수과목 ['Java', '객체지향', 'Spring', 'JPA', 'MySQL']중에서 듣고싶은 과목을 선택하세요.");
+                        String subject = sc.nextLine();
+                        if (subject.equals("Java")) {
+                            mainSubjects.add(subjectStore.get(0));
+                            break;
+                        } else if (subject.equals("객체지향")) {
+                            mainSubjects.add(subjectStore.get(1));
+                            break;
+                        } else if (subject.equals("Spring")) {
+                            mainSubjects.add(subjectStore.get(2));
+                            break;
+                        } else if (subject.equals("JPA")) {
+                            mainSubjects.add(subjectStore.get(3));
+                            break;
+                        } else if (subject.equals("MySQL")) {
+                            mainSubjects.add(subjectStore.get(4));
+                            break;
+                        } else {
+                            System.out.println("과목 명을 다시 입력해 주세요.");
+                        }
+                    }
+                }
+                break;
+            }
+        }
+        while(true) {
+            System.out.println("원하는 선택 과목 수를 입력하세요.");
+            int ss = sc.nextInt();
+            sc.nextLine();
+            if (ss < 2) {
+                System.out.println("선택 과목은 최소 2과목 이상 선택해야 합니다. 다시 입력해 주세요");
+            } else {
+                for (int i = 0; i < ss; i++) {
+                    while(true) {
+                        System.out.println("필수과목 ['디자인 패턴', 'Spring Security', 'Redis', 'MongoDB']중에서 듣고싶은 과목을 선택하세요.");
+                        String subject = sc.nextLine();
+                        if (subject.equals("디자인 패턴")) {
+                            subSubjects.add(subjectStore.get(5));
+                            break;
+                        } else if (subject.equals("Spring Security")) {
+                            subSubjects.add(subjectStore.get(6));
+                            break;
+                        } else if (subject.equals("Redis")) {
+                            subSubjects.add(subjectStore.get(7));
+                            break;
+                        } else if (subject.equals("MongoDB")) {
+                            subSubjects.add(subjectStore.get(8));
+                            break;
+                        } else {
+                            System.out.println("과목 명을 잘못 입력하셨습니다. 과목 명을 다시 입력해 주세요.");
+                        }
+                    }
+                }
+                break;
+            }
+        }
+        for (Subject mainSubject : mainSubjects) {
+            System.out.println(mainSubject.getSubjectId() + " " + mainSubject.getSubjectName() + " " + mainSubject.getSubjectType());
+        }
+        for (Subject subSubject : subSubjects) {
+            System.out.println(subSubject.getSubjectId() + " " + subSubject.getSubjectName() + " " + subSubject.getSubjectType());
+        }
+        Student student = new Student(sequence(INDEX_TYPE_STUDENT), studentName, mainSubjects, subSubjects); // 수강생 인스턴스 생성 예시 코드
         // 기능 구현
         System.out.println(student.getStudentName() + " " + student.getStudentId());
         studentStore.add(student);

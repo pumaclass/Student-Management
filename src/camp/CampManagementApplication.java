@@ -41,9 +41,7 @@ public class CampManagementApplication {
 
     public static void main(String[] args) {
         setInitData();
-        System.out.println("조수현 완료");
-        System.out.println("이봉원 완료");
-        System.out.println("길용진 완료");
+        System.out.println(subjectStore.get(0).getSubjectName());
         try {
             displayMainView();
         } catch (Exception e) {

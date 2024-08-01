@@ -4,6 +4,7 @@ import camp.model.Score;
 import camp.model.Student;
 import camp.model.Subject;
 
+import java.sql.SQLOutput;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
@@ -41,7 +42,6 @@ public class CampManagementApplication {
 
     public static void main(String[] args) {
         setInitData();
-
 
         try {
             displayMainView();
@@ -132,6 +132,7 @@ public class CampManagementApplication {
             System.out.println("3. 프로그램 종료");
             System.out.print("관리 항목을 선택하세요...");
             int input = sc.nextInt();
+            sc.nextLine();
 
             switch (input) {
                 case 1 -> displayStudentView(); // 수강생 관리
@@ -153,14 +154,19 @@ public class CampManagementApplication {
             System.out.println("수강생 관리 실행 중...");
             System.out.println("1. 수강생 등록");
             System.out.println("2. 수강생 목록 조회");
-            System.out.println("3. 메인 화면 이동");
+            System.out.println("3. 수강생 목록 수정");
+            System.out.println("4. 수강생 목록 삭제");
+            System.out.println("5. 메인 화면 이동");
             System.out.print("관리 항목을 선택하세요...");
             int input = sc.nextInt();
+            sc.nextLine();
 
             switch (input) {
                 case 1 -> createStudent(); // 수강생 등록
                 case 2 -> inquireStudent(); // 수강생 목록 조회
-                case 3 -> flag = false; // 메인 화면 이동
+                case 3 -> modifyStudent();  // 수강생 목록 수정
+                case 4 -> removeStudent();  // 수강생 목록 삭제
+                case 5 -> flag = false; // 메인 화면 이동
                 default -> {
                     System.out.println("잘못된 입력입니다.\n메인 화면 이동...");
                     flag = false;
@@ -168,6 +174,8 @@ public class CampManagementApplication {
             }
         }
     }
+
+
 
     // 수강생 등록
     private static void createStudent() {
@@ -185,7 +193,9 @@ public class CampManagementApplication {
             int ms = sc.nextInt();
             sc.nextLine();
             List<String> msNotSame = new ArrayList<>(); // 같은 과목을 수강하는것을 방지하기 위해 저장합니다.
+
             if (ms < 3 || ms > 5) {
+
                 System.out.println("필수과목은 최소 3과목 이상 5과목 이하로 선택해야 합니다. 다시 입력해 주세요");
             } else {
                 for (int i = 0; i < ms; i++) {
@@ -215,6 +225,7 @@ public class CampManagementApplication {
                         } else if (subject.equals("5")) {
                             mainSubjects.add(subjectStore.get(4));
                             msNotSame.add("5");
+
                             break;
                         } else {
                             System.out.println("과목 명을 다시 입력해 주세요.");
@@ -235,12 +246,15 @@ public class CampManagementApplication {
             } else {
                 for (int i = 0; i < ss; i++) {
                     while(true) {
+
                         System.out.println("필수과목 [1: '디자인 패턴', 2: 'Spring Security', 3: 'Redis', 4: 'MongoDB']중에서 듣고싶은 과목을 선택하세요.");
+
                         String subject = sc.nextLine();
                         if (ssNotSame.contains(subject)) {
                             System.out.println("이미 수강한 과목입니다. 다시 입력해주세요.");
                             continue;
                         }
+
                         if (subject.equals("1")) {
                             subSubjects.add(subjectStore.get(5));
                             ssNotSame.add("1");
@@ -256,6 +270,7 @@ public class CampManagementApplication {
                         } else if (subject.equals("4")) {
                             subSubjects.add(subjectStore.get(8));
                             ssNotSame.add("4");
+
                             break;
                         } else {
                             System.out.println("과목 명을 잘못 입력하셨습니다. 과목 명을 다시 입력해 주세요.");
@@ -279,6 +294,8 @@ public class CampManagementApplication {
         System.out.println("수강생 등록 성공!\n");
     }
 
+
+
     // 수강생 목록 조회
     private static void inquireStudent() {
         System.out.println("\n수강생 목록을 조회합니다...");
@@ -286,7 +303,46 @@ public class CampManagementApplication {
         for (Student student : studentStore) {
             System.out.println("학생 Id : " + student.getStudentId() +  ", 학생 이름: " + student.getStudentName());
         }
+        // 1. 수강생 목록을 조회를 하려면
+        // 2. 이 목록을 가지고 있는 이름을 찾아보면 studentStore이란걸 알 수 있음
+        // 3. 조회라는 행동을 했을 때 return 할 필요 없이 눈에 바로 보여지니까 print 해야됨
+        // 4. 수강생이 한명이 아니라 여러명이라 계속 프린트로 뽑아줘야 하고 list 에 있는 size 메소드사용하니
+        // 수강생이 몇명인지 알 수 있으니 향상된 for문을 사용할 수 있음(while이 틀린건 아니지만 귀찮음)
+        // 향상된for문:배열을 넘기면 배열안에있는 모든 원소를 탐색(조건없이 안에있는 수강생전부 보여줄거니까)
+        // 6. 조회필수정보: 고유번호와 이름 -> private이라 직접적으로 접근 불가능 그래서 getter 사용
+        // getter 메소드가 무엇인지 정리하면서 해보기 (고유번호/이름 을 반환하는 메소드이름)
+
         System.out.println("\n수강생 목록 조회 성공!");
+    }
+
+    // 수강생 목록 수정
+    private static void modifyStudent() {
+        System.out.println("\n수정할 수강생의 이름을 입력해주세요. ");
+        String targetStudentName = sc.next();
+        sc.nextLine();
+
+        System.out.println("\n수정할 수강생의 고유번호(ID)를 입력해주세요. ");
+        String targetStudentId = sc.next();
+        sc.nextLine();
+
+        System.out.println("\n새 이름을 입력해주세요. ");
+        String newUserName = sc.next();
+        sc.nextLine();
+
+        for (Student student : studentStore) {
+            if (student.getStudentId().equals(targetStudentId)) {
+                student.setStudentName(newUserName);
+                break;
+            }
+        }
+
+        System.out.println("\n" + targetStudentName +"님이"+ newUserName + "으로 변경되었습니다.");
+        System.out.println("수정 완료");
+    }
+
+    // 수강생 목록 삭제
+    private static void removeStudent() {
+        System.out.println();
     }
 
     private static void displayScoreView() {
@@ -300,6 +356,7 @@ public class CampManagementApplication {
             System.out.println("4. 메인 화면 이동");
             System.out.print("관리 항목을 선택하세요...");
             int input = sc.nextInt();
+            sc.nextLine();
 
             switch (input) {
                 case 1 -> createScore(); // 수강생의 과목별 시험 회차 및 점수 등록
@@ -316,14 +373,37 @@ public class CampManagementApplication {
 
     private static String getStudentId() {
         System.out.print("\n관리할 수강생의 번호를 입력하시오...");
-        return sc.next();
+        return sc.nextLine();
     }
 
     // 수강생의 과목별 시험 회차 및 점수 등록
     private static void createScore() {
-        String studentId = getStudentId(); // 관리할 수강생 고유 번호
         System.out.println("시험 점수를 등록합니다...");
+        String studentId = getStudentId(); // 관리할 수강생 고유 번호 입력 받기
+
+
+        // studentIdx로 학생 정보 조회
+        int studentIdx = 0;
+        for(int i = 0 ; i < studentStore.size() ; i++){
+            if(studentStore.get(i).getStudentId().equals(studentId)){
+                studentIdx = i;
+            }
+        }
+
         // 기능 구현
+        System.out.println("점수를 등록할 과목을 선택해주세요.");
+        studentStore.get(studentIdx).printAllSubject();
+
+        // 점수를 입력할 과목 입력
+        String selectSubject = sc.nextLine();
+
+        System.out.print("점수를 입력해주세요.");
+        int newScore = sc.nextInt();
+        studentStore.get(studentIdx).addStudentScore(selectSubject, newScore);
+
+        // 확인하기
+        studentStore.get(studentIdx).printAllScores();
+
         System.out.println("\n점수 등록 성공!");
     }
 

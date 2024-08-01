@@ -47,6 +47,7 @@ public class CampManagementApplication {
             displayMainView();
         } catch (Exception e) {
             System.out.println("\n오류 발생!\n프로그램을 종료합니다.");
+            System.out.println("오류 발생 이유: " + e.getMessage());
         }
     }
 
@@ -178,17 +179,18 @@ public class CampManagementApplication {
         String studentName = sc.next();
         // 기능 구현 (필수 과목, 선택 과목)
         sc.nextLine();
+        // 필수 과목 로직입니다.
         while(true) {
             System.out.println("원하는 필수 과목 수를 입력하세요.");
             int ms = sc.nextInt();
             sc.nextLine();
-            List<String> msNotSame = new ArrayList<>();
+            List<String> msNotSame = new ArrayList<>(); // 같은 과목을 수강하는것을 방지하기 위해 저장합니다.
             if (ms < 3 || ms > 5) {
                 System.out.println("필수과목은 최소 3과목 이상 5과목 이하로 선택해야 합니다. 다시 입력해 주세요");
             } else {
                 for (int i = 0; i < ms; i++) {
                     while (true) {
-                        System.out.println("필수과목 [1: 'Java', 2: '객체지향', 3: 'Spring', 4: 'JPA', 4: 'MySQL']중에서 듣고싶은 과목을 선택하세요.");
+                        System.out.println("필수과목 [1: 'Java', 2: '객체지향', 3: 'Spring', 4: 'JPA', 5: 'MySQL']중에서 듣고싶은 과목을 선택하세요.");
                         String subject = sc.nextLine();
                         if(msNotSame.contains(subject)) {
                             System.out.println("이미 수강한 과목입니다. 다시 입력해주세요.");
@@ -222,11 +224,12 @@ public class CampManagementApplication {
                 break;
             }
         }
+        // 선택 과목 로직입니다.
         while(true) {
             System.out.println("원하는 선택 과목 수를 입력하세요.");
             int ss = sc.nextInt();
             sc.nextLine();
-            List<String> ssNotSame = new ArrayList<>();
+            List<String> ssNotSame = new ArrayList<>(); // 같은 과목을 수강하는것을 방지하기 위해 저장합니다.
             if (ss < 2 || ss >= 4) {
                 System.out.println("선택 과목은 최소 2과목 이상 4과목 이하로 선택해야 합니다. 다시 입력해 주세요");
             } else {
@@ -234,7 +237,7 @@ public class CampManagementApplication {
                     while(true) {
                         System.out.println("필수과목 [1: '디자인 패턴', 2: 'Spring Security', 3: 'Redis', 4: 'MongoDB']중에서 듣고싶은 과목을 선택하세요.");
                         String subject = sc.nextLine();
-                        if(ssNotSame.contains(subject)) {
+                        if (ssNotSame.contains(subject)) {
                             System.out.println("이미 수강한 과목입니다. 다시 입력해주세요.");
                             continue;
                         }
@@ -268,7 +271,8 @@ public class CampManagementApplication {
         for (Subject subSubject : subSubjects) {
             System.out.println(subSubject.getSubjectId() + " " + subSubject.getSubjectName() + " " + subSubject.getSubjectType());
         }
-        Student student = new Student(sequence(INDEX_TYPE_STUDENT), studentName, mainSubjects, subSubjects); // 수강생 인스턴스 생성 예시 코드
+        Student student = new Student(sequence(INDEX_TYPE_STUDENT), studentName, mainSubjects, subSubjects); // 수강생 인스턴스 생성 코드
+
         // 기능 구현
         System.out.println(student.getStudentName() + " " + student.getStudentId());
         studentStore.add(student);
@@ -279,6 +283,9 @@ public class CampManagementApplication {
     private static void inquireStudent() {
         System.out.println("\n수강생 목록을 조회합니다...");
         // 기능 구현
+        for (Student student : studentStore) {
+            System.out.println("학생 Id : " + student.getStudentId() +  ", 학생 이름: " + student.getStudentName());
+        }
         System.out.println("\n수강생 목록 조회 성공!");
     }
 

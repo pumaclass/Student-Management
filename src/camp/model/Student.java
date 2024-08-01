@@ -1,7 +1,7 @@
 package camp.model;
 
 public class Student {
-    private String studentId;
+    private final String studentId;
     private String studentName;
 
     public Student(String seq, String studentName) {
@@ -16,6 +16,10 @@ public class Student {
 
     public String getStudentName() {
         return studentName;
+    }
+
+    public void studentRegistration() {
+
     }
 
 }

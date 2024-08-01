@@ -41,12 +41,7 @@ public class CampManagementApplication {
 
     public static void main(String[] args) {
         setInitData();
-        System.out.println("조수현 완료1234");
-        System.out.println("조수현 완료");
-        System.out.println("이봉원 완료");
-        System.out.println("길용진 완료");
-        System.out.println("안동환 완료");
-        System.out.println("배주희 완료");
+
 
         try {
             displayMainView();
@@ -179,9 +174,10 @@ public class CampManagementApplication {
         System.out.print("수강생 이름 입력: ");
         String studentName = sc.next();
         // 기능 구현 (필수 과목, 선택 과목)
-
         Student student = new Student(sequence(INDEX_TYPE_STUDENT), studentName); // 수강생 인스턴스 생성 예시 코드
         // 기능 구현
+        System.out.println(student.getStudentName() + " " + student.getStudentId());
+        studentStore.add(student);
         System.out.println("수강생 등록 성공!\n");
     }
 

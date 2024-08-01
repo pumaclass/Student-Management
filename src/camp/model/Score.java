@@ -42,28 +42,7 @@ public class Score {
     public void setGrade(char grade){
         this.grade = grade;
     }
-    /*
-    public Score scoreRegister(Student student, Subject subject, int score){
-        String studentId = student.getStudentId();
-        int scoreId = 0;
 
-        for(int i = 0 ; i < scores.size() ; i++) {
-            if(studentId.equals(scores.get(i).studentId)){
-                scoreId = scores.get(i).scoreId + 1;
-                break;
-            }
-        }
-
-        Score newScore = new Score(studentId, scoreId, subject.getSubjectId(), score, scoreToGrade(score, subject.getSubjectType()));
-        System.out.println("Score내부 StudentId : " + newScore.getStudentId());
-        System.out.println("Score내부 scoreId : " + newScore.getScoreId());
-        System.out.println("Score내부 subjectId : " + newScore.getSubjectType());
-        System.out.println("Score내부 score : " + newScore.getScore());
-        System.out.println("Score내부 grade : " + newScore.getGrade());
-
-        return newScore;
-    }
-    */
     public char scoreToGrade(int score, String subjectType){
         char grade = 'N'; // 초기화
 

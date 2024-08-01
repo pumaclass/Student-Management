@@ -183,36 +183,36 @@ public class CampManagementApplication {
             int ms = sc.nextInt();
             sc.nextLine();
             List<String> msNotSame = new ArrayList<>();
-            if (ms < 3 || ms >= 5) {
+            if (ms < 3 || ms > 5) {
                 System.out.println("필수과목은 최소 3과목 이상 5과목 이하로 선택해야 합니다. 다시 입력해 주세요");
             } else {
                 for (int i = 0; i < ms; i++) {
                     while (true) {
-                        System.out.println("필수과목 ['Java', '객체지향', 'Spring', 'JPA', 'MySQL']중에서 듣고싶은 과목을 선택하세요.");
+                        System.out.println("필수과목 [1: 'Java', 2: '객체지향', 3: 'Spring', 4: 'JPA', 4: 'MySQL']중에서 듣고싶은 과목을 선택하세요.");
                         String subject = sc.nextLine();
                         if(msNotSame.contains(subject)) {
                             System.out.println("이미 수강한 과목입니다. 다시 입력해주세요.");
                             continue;
                         }
-                        if (subject.equals("Java")) {
+                        if (subject.equals("1")) {
                             mainSubjects.add(subjectStore.get(0));
-                            msNotSame.add("Java");
+                            msNotSame.add("1");
                             break;
-                        } else if (subject.equals("객체지향")) {
+                        } else if (subject.equals("2")) {
                             mainSubjects.add(subjectStore.get(1));
-                            msNotSame.add("객체지향");
+                            msNotSame.add("2");
                             break;
-                        } else if (subject.equals("Spring")) {
+                        } else if (subject.equals("3")) {
                             mainSubjects.add(subjectStore.get(2));
-                            msNotSame.add("Spring");
+                            msNotSame.add("3");
                             break;
-                        } else if (subject.equals("JPA")) {
+                        } else if (subject.equals("4")) {
                             mainSubjects.add(subjectStore.get(3));
-                            msNotSame.add("JPA");
+                            msNotSame.add("4");
                             break;
-                        } else if (subject.equals("MySQL")) {
+                        } else if (subject.equals("5")) {
                             mainSubjects.add(subjectStore.get(4));
-                            msNotSame.add("MySQL");
+                            msNotSame.add("5");
                             break;
                         } else {
                             System.out.println("과목 명을 다시 입력해 주세요.");
@@ -232,27 +232,27 @@ public class CampManagementApplication {
             } else {
                 for (int i = 0; i < ss; i++) {
                     while(true) {
-                        System.out.println("필수과목 ['디자인 패턴', 'Spring Security', 'Redis', 'MongoDB']중에서 듣고싶은 과목을 선택하세요.");
+                        System.out.println("필수과목 [1: '디자인 패턴', 2: 'Spring Security', 3: 'Redis', 4: 'MongoDB']중에서 듣고싶은 과목을 선택하세요.");
                         String subject = sc.nextLine();
                         if(ssNotSame.contains(subject)) {
                             System.out.println("이미 수강한 과목입니다. 다시 입력해주세요.");
                             continue;
                         }
-                        if (subject.equals("디자인 패턴")) {
+                        if (subject.equals("1")) {
                             subSubjects.add(subjectStore.get(5));
-                            ssNotSame.add("디자인 패턴");
+                            ssNotSame.add("1");
                             break;
-                        } else if (subject.equals("Spring Security")) {
+                        } else if (subject.equals("2")) {
                             subSubjects.add(subjectStore.get(6));
-                            ssNotSame.add("Spring Security");
+                            ssNotSame.add("2");
                             break;
-                        } else if (subject.equals("Redis")) {
+                        } else if (subject.equals("3")) {
                             subSubjects.add(subjectStore.get(7));
-                            ssNotSame.add("Redis");
+                            ssNotSame.add("3");
                             break;
-                        } else if (subject.equals("MongoDB")) {
+                        } else if (subject.equals("4")) {
                             subSubjects.add(subjectStore.get(8));
-                            ssNotSame.add("MongoDB");
+                            ssNotSame.add("4");
                             break;
                         } else {
                             System.out.println("과목 명을 잘못 입력하셨습니다. 과목 명을 다시 입력해 주세요.");

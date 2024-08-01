@@ -41,7 +41,7 @@ public class CampManagementApplication {
 
     public static void main(String[] args) {
         setInitData();
-        System.out.println("scoreRegistration 생성");
+        System.out.println("조수현 완료");
         try {
             displayMainView();
         } catch (Exception e) {

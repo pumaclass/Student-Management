@@ -293,11 +293,27 @@ public class CampManagementApplication {
 
     // 수강생 목록 수정
     private static void modifyStudent() {
-        System.out.println("\n수정할 수강생의 이름을 입력하세요. ");
+        System.out.println("\n수정할 수강생의 이름을 입력해주세요. ");
+        String targetStudentName = sc.next();
+        sc.nextLine();
 
-        System.out.println("\n수정할 수강생의 고유번호를 입력해주세요. ");
+        System.out.println("\n수정할 수강생의 고유번호(ID)를 입력해주세요. ");
+        String targetStudentId = sc.next();
+        sc.nextLine();
 
-        System.out.println("\n수강생 목록 수정 성공!");
+        System.out.println("\n새 이름을 입력해주세요. ");
+        String newUserName = sc.next();
+        sc.nextLine();
+
+        for (Student student : studentStore) {
+            if (student.getStudentId().equals(targetStudentId)) {
+                student.setStudentName(newUserName);
+                break;
+            }
+        }
+
+        System.out.println("\n" + targetStudentName +"님이"+ newUserName + "으로 변경되었습니다.");
+        System.out.println("수정 완료");
     }
 
     // 수강생 목록 삭제

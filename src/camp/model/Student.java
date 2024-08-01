@@ -36,4 +36,9 @@ public class Student {
     public List<Subject> getSubSubjects() {
         return subSubjects;
     }
+
+    // Setter
+    public void setStudentName(String studentName) {
+        this.studentName = studentName;
+    }
 }

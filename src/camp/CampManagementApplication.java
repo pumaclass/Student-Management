@@ -43,6 +43,7 @@ public class CampManagementApplication {
         setInitData();
         System.out.println("조수현 완료");
         System.out.println("이봉원 완료");
+        System.out.println("길용진 완료");
         try {
             displayMainView();
         } catch (Exception e) {

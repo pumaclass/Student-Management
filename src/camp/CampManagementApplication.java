@@ -303,6 +303,12 @@ public class CampManagementApplication {
         // 향상된for문:배열을 넘기면 배열안에있는 모든 원소를 탐색(조건없이 안에있는 수강생전부 보여줄거니까)
         // 6. 조회필수정보: 고유번호와 이름 -> private이라 직접적으로 접근 불가능 그래서 getter 사용
         // getter 메소드가 무엇인지 정리하면서 해보기 (고유번호/이름 을 반환하는 메소드이름)
+        for (int i = 0; i < studentStore.size(); i++) { // 여기에서 int는 몇번돌지를 선택하는거라 int 를 쓰면돼 / size는 갯수
+            studentStore.get(i); // index=i / i번째 student를 가져오겠따 -> 가져왔으니 어디에 할당을 시켜줄지 생각하기
+            Student studentInfo = studentStore.get(i); // studentinfo는 store 에서 등록된 i에서 가져온 학생
+            System.out.println("조회하신 학생의 고유번호는 " + studentInfo.getStudentId() + " 입니다.");
+            System.out.println("조회하신 학생의 이름은 " + studentInfo.getStudentName() + " 입니다.");
+        }
 
         System.out.println("\n수강생 목록 조회 성공!");
     }

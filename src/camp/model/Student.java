@@ -5,7 +5,7 @@ import java.util.List;
 
 public class Student {
     private final String studentId;
-    private final String studentName;
+    private String studentName;
     private List<Subject> mainSubjects;
     private List<Subject> subSubjects;
 

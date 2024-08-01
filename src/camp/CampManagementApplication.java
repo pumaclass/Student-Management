@@ -279,6 +279,15 @@ public class CampManagementApplication {
     private static void inquireStudent() {
         System.out.println("\n수강생 목록을 조회합니다...");
         // 기능 구현
+        // 1. 수강생 목록을 조회를 하려면
+        // 2. 이 목록을 가지고 있는 이름을 찾아보면 studentStore이란걸 알 수 있음
+        // 3. 조회라는 행동을 했을 때 return 할 필요 없이 눈에 바로 보여지니까 print 해야됨
+        // 4. 수강생이 한명이 아니라 여러명이라 계속 프린트로 뽑아줘야 하고 list 에 있는 size 메소드사용하니
+        // 수강생이 몇명인지 알 수 있으니 향상된 for문을 사용할 수 있음(while이 틀린건 아니지만 귀찮음)
+        // 향상된for문:배열을 넘기면 배열안에있는 모든 원소를 탐색(조건없이 안에있는 수강생전부 보여줄거니까)
+        // 6. 조회필수정보: 고유번호와 이름 -> private이라 직접적으로 접근 불가능 그래서 getter 사용
+        // getter 메소드가 무엇인지 정리하면서 해보기 (고유번호/이름 을 반환하는 메소드이름)
+
         System.out.println("\n수강생 목록 조회 성공!");
     }
 

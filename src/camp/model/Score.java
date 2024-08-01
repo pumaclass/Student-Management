@@ -12,4 +12,5 @@ public class Score {
         return scoreId;
     }
 
+    System.out.println("ㅎㅇ");
 }

@@ -1,43 +1,34 @@
 package camp.model;
 
-import java.util.ArrayList;
-import java.util.List;
-
 public class Score {
     private String studentId; // 수강생 고유번호
     private int scoreId = 0; // 회차 범위 1 ~ 10
-    private String subjectType; // 과목(필수 / 선택)
+    private String subjectName; // 과목(필수 / 선택)
     private int score; // 점수
     private char grade; // 등급
 
-    List<Score> scores = new ArrayList<>();
-
-    public Score(int seq, String subjectType, String studentId, int score, char grade) {
-        this.scoreId = seq;
-        this.subjectType = subjectType;
-        this.studentId = studentId;
+    public Score(Student student, int scoreId, Subject subject, int score) {
+        this.scoreId = scoreId;
+        this.subjectName = subject.getSubjectName();
+        this.studentId = student.getStudentId();
         this.score = score;
-        this.grade = grade;
+        this.grade = scoreToGrade(score, subject.getSubjectType());
     }
-
-    public Score(){}
 
     // Getter
-    public int getScoreId() {
-        return scoreId;
-    }
-    public String getSubjectType() { return subjectType; }
-    public String getStudentId() { return studentId; }
-    public int getScore() { return score; }
-    public char getGrade() { return grade; }
+    public int getScoreId() { return this.scoreId; }
+    public String getSubjectName() { return this.subjectName; }
+    public String getStudentId() { return this.studentId; }
+    public int getScore() { return this.score; }
+    public char getGrade() { return this.grade; }
 
     // Setter
     public void setScoreId(){
-        this.scoreId = scoreId + 1;
+        this.scoreId = scoreId;
     }
 
-    public void setSubjectType(String subjectType){
-        this.subjectType = subjectType;
+    public void setSubjectName(String subjectName){
+        this.subjectName = subjectName;
     }
 
     public void setStudentId(String studentId){
@@ -51,16 +42,28 @@ public class Score {
     public void setGrade(char grade){
         this.grade = grade;
     }
+    /*
+    public Score scoreRegister(Student student, Subject subject, int score){
+        String studentId = student.getStudentId();
+        int scoreId = 0;
 
+        for(int i = 0 ; i < scores.size() ; i++) {
+            if(studentId.equals(scores.get(i).studentId)){
+                scoreId = scores.get(i).scoreId + 1;
+                break;
+            }
+        }
 
+        Score newScore = new Score(studentId, scoreId, subject.getSubjectId(), score, scoreToGrade(score, subject.getSubjectType()));
+        System.out.println("Score내부 StudentId : " + newScore.getStudentId());
+        System.out.println("Score내부 scoreId : " + newScore.getScoreId());
+        System.out.println("Score내부 subjectId : " + newScore.getSubjectType());
+        System.out.println("Score내부 score : " + newScore.getScore());
+        System.out.println("Score내부 grade : " + newScore.getGrade());
 
-    public void scoreRegist(Student student, int score){
-        char grade = scoreToGrade(score, subjectType);
-        student.getStudentId();
-
-        //scores.add(new Score( seq, subjectType, studentId, score, scoreToGrade(score, subjectType)));
+        return newScore;
     }
-
+    */
     public char scoreToGrade(int score, String subjectType){
         char grade = 'N'; // 초기화
 

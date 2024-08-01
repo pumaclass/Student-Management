@@ -11,5 +11,4 @@ public class Score {
     public String getScoreId() {
         return scoreId;
     }
-
 }

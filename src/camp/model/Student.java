@@ -37,6 +37,52 @@ public class Student { //수강생
         return subSubjects;
     }
 
+    //원하는 과목 하나만 출력
+    public void printScores(String subjectName) {
+        for (int i = 0; i < mainSubjects.size(); i++) {
+            if (mainSubjects.get(i).getSubjectName().equals(subjectName) ) {
+                mainSubjects.get(i).printScores();
+            }
+        }
+        for (int i = 0; i < subSubjects.size(); i++) {
+            if (subSubjects.get(i).getSubjectName().equals(subjectName) ) {
+                subSubjects.get(i).printScores();
+            }
+        }
+    }
+
+    //모든 과목 출력
+    public void printAllScores() {
+        for (int i = 0; i < mainSubjects.size(); i++) {
+            mainSubjects.get(i).printScores();
+        }
+        for (int i = 0; i < subSubjects.size(); i++) {
+            subSubjects.get(i).printScores();
+        }
+    }
+
+    public void addStudentScore(String subjectName, int score) {
+        for (int i = 0; i < mainSubjects.size(); i++) {
+            if (mainSubjects.get(i).getSubjectName().equals(subjectName) ) {
+                mainSubjects.get(i).addScore(score);
+            }
+        }
+        for (int i = 0; i < subSubjects.size(); i++) {
+            if (subSubjects.get(i).getSubjectName().equals(subjectName) ) {
+                subSubjects.get(i).addScore(score);
+            }
+        }
+    }
+
+    public void printAllSubject(){
+        for (Subject mainSubject : mainSubjects) {
+            mainSubject.printSubject();
+        }
+        for (Subject subSubject : subSubjects) {
+            subSubject.printSubject();
+        }
+    }
+
 
     // Setter
     public void setStudentName(String studentName) {

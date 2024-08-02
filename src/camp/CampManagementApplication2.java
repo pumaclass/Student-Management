@@ -1,13 +1,14 @@
+
 package camp;
 
 import camp.model.Score;
 import camp.model.Student;
 import camp.model.Subject;
 
-import java.sql.SQLOutput;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
+
 
 /**
  * Notification
@@ -19,7 +20,8 @@ import java.util.Scanner;
  */
 
 
-public class CampManagementApplication {
+
+public class CampManagementApplication2 {
     // 데이터 저장소
     private static List<Student> studentStore;
     private static List<Subject> subjectStore;
@@ -370,38 +372,88 @@ public class CampManagementApplication {
     // 수강생의 과목별 시험 회차 및 점수 등록
     private static void createScore() {
         String studentId = getStudentId(); // 관리할 수강생 고유 번호
-        Student student = new Student();
-
         System.out.println("시험 점수를 등록합니다...");
 
-        // 입력받은 학생 고유번호로 학생 정보 조회
+        int studentIdx = 0;
+        // 입력받은 학생 고유번호로 studentIdx를 찾아 학생 정보 조회
         for(int i = 0 ; i < studentStore.size() ; i++){
-            if(studentStore.get(i).getStudentId().equals(studentId))
-                student = studentStore.get(i);
+            if(studentStore.get(i).getStudentId().equals(studentId)){
+                studentIdx = i;
+            }
         }
 
         System.out.println("점수를 등록할 과목을 선택해주세요.");
-        student.printList(student.SubjectList());
+        // 선택한 필수과목 출력
+        for(int i = 0 ; i < studentStore.get(studentIdx).getMainSubjects().size() ; i++){
+            System.out.println(" - " + studentStore.get(studentIdx).getMainSubjects().get(i).getSubjectName());
+        }
+        // 선택한 선택과목 출력
+        for(int i = 0 ; i < studentStore.get(studentIdx).getSubSubjects().size() ; i++){
+            System.out.println(" - " + studentStore.get(studentIdx).getSubSubjects().get(i).getSubjectName());
+        }
 
         sc.nextLine();
         // 점수를 입력할 과목 입력
         String selectSubject = sc.nextLine();
 
+        int nameIdx = 0; //  입력받은 과목 이름으로 subject 리스트에서 찾을 인덱스 번호
+
+        // 리스트에서 입력받은 과목이 몇 번째에 위치하는지 조회
+        for(int i = 0 ; i < subjectStore.size() ; i++){
+            String subject = subjectStore.get(i).getSubjectName();
+            if(subject.equals(selectSubject)) {
+                nameIdx = i;
+                break;
+            }
+        }
+
+        int scoreIdx = -2; // 학생의 해당과목이 몇 번째인지 확인하는 인덱스
+
+        if(scoreStore.size() != 0) { // 누군가의 저장 이력이 있는 경우
+            for (int i = scoreStore.size() - 1 ; i >= 0 ; i--) {
+                if (scoreStore.get(i).getStudentId().equals(studentId) // 학생 ID와 과목 이력이 있는 경우
+                        && scoreStore.get(i).getSubjectName().equals(selectSubject)) {
+                    System.out.println("저장이력");
+                    scoreIdx = i;
+                    break;
+                }
+                // 저장된 이력이 없는 경우 => 최초 저장
+                System.out.println("최초저장");
+                scoreIdx = -1;
+            }
+        }
+        else{  // 아~~~예 모든 데이터 처음인 경우
+            System.out.println("아예처음");
+            scoreIdx = -1;
+        }
+
+        System.out.println("scoreIdx : " + scoreIdx);
         // 과목 점수 입력
-        System.out.print("점수를 입력해주세요 : ");
+        System.out.print("점수를 입력해주세요.");
         int newScore = sc.nextInt();
 
         // 점수 저장!
-        student.newScore(newScore, selectSubject);
+        if(scoreIdx == -1) { // 최초 저장
+            scoreStore.add(new Score(studentStore.get(studentIdx), 0, subjectStore.get(nameIdx), newScore));
+            System.out.println("최초 저장");
+        }
+        else{ // 이어서 저장
+            scoreStore.get(scoreIdx).addScore(scoreStore.get(scoreIdx).getScoreId(), newScore, selectSubject);
+            System.out.println("이어서 저장");
+        }
 
-        System.out.println("StudentId : " + student.getStudentId());
-        System.out.println("subjectName : " + student.getSubjectInfo(selectSubject).getSubjectName());
+        System.out.println("StudentId : " + scoreStore.get(scoreStore.size() - 1).getStudentId());
+        System.out.println("scoreId : " + scoreStore.get(scoreStore.size() - 1).getScoreId());
+        System.out.println("subjectName : " + scoreStore.get(scoreStore.size() - 1).getSubjectName());
         System.out.print("score :");
-        for(int i : student.getSubjectInfo(selectSubject).getScores().getScore())
-            System.out.print(" " + i);
-        System.out.print("\nGrade :");
-        for(char i : student.getSubjectInfo(selectSubject).getScores().getGrade())
-            System.out.print(" " + i );
+        for(int i = 0 ; i < scoreStore.get(scoreStore.size() - 1).getScore().size() ; i++){
+            System.out.print(" " + scoreStore.get(scoreStore.size() - 1).getScore().get(i));
+        }
+        System.out.print("\ngrade :");
+        for(int i = 0 ; i < scoreStore.get(scoreStore.size() - 1).getScore().size() ; i++){
+            System.out.print(" " + scoreStore.get(scoreStore.size() - 1).getGrade().get(i));
+        }
+
 
         System.out.println("\n점수 등록 성공!");
     }
@@ -423,4 +475,6 @@ public class CampManagementApplication {
         // 기능 구현
         System.out.println("\n등급 조회 성공!");
     }
+
 }
+

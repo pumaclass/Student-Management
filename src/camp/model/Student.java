@@ -5,7 +5,7 @@ import java.util.List;
 
 
 public class Student { //수강생
-    private final String studentId;//고유번호(겹치는안되는 단위의 값)
+    private String studentId;//고유번호(겹치는안되는 단위의 값)
     private String studentName;//이름
     private List<Subject> mainSubjects; //과목목록-필수과목
     private List<Subject> subSubjects; //과목목록-선택과목
@@ -19,6 +19,7 @@ public class Student { //수강생
         this.subSubjects = subSubjects;
     }
 
+    public Student(){}
 
     // Getter
     public String getStudentId() {
@@ -37,10 +38,40 @@ public class Student { //수강생
         return subSubjects;
     }
 
+    public Subject getSubjectInfo(String subject){
+        int idx = 0;
+        for(int i = 0 ; i < SubjectList().size() ; i++)
+            if(SubjectList().get(i).getSubjectName().equals(subject))
+                idx = i;
+        return SubjectList().get(idx);
+    }
 
     // Setter
     public void setStudentName(String studentName) {
         this.studentName = studentName;
     }
 
+    public void newScore(int score, String select){
+        for(int i = 0 ; i < SubjectList().size() ; i++){
+            if(SubjectList().get(i).getSubjectName().equals(select)){
+                SubjectList().get(i).setScore(score);
+                break;
+            }
+        }
+    }
+
+    public List<Subject> SubjectList(){
+        List<Subject> list = new ArrayList<>();
+        for(Subject i : mainSubjects)
+            list.add(i);
+        for(Subject i : subSubjects)
+            list.add(i);
+
+        return list;
+    }
+
+    public void printList(List<Subject> list){
+        for(Subject i : list)
+            System.out.println(" - " + i.getSubjectName());
+    }
 }

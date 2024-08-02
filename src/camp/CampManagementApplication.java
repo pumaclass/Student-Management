@@ -554,7 +554,6 @@ public class CampManagementApplication {
 
         System.out.println("수정할 점수를 입력하세요.");
         int newScore = getScore();
-        sc.nextLine();
 
         student.editScore(subject, round-1, newScore);
         student.printAllScores();

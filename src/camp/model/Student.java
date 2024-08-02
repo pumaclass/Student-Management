@@ -24,6 +24,12 @@ public class Student { //수강생
     public List<Subject> getMainSubjects()  { return this.mainSubjects; }
     public List<Subject> getSubSubjects()   { return this.subSubjects; }
 
+    public void printAllGrades(){
+        for(Subject sub : subjectList()){
+            sub.printAllGrades();
+        }
+    }
+
 
     // Setter
     public void setStudentName(String studentName) {

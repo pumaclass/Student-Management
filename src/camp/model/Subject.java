@@ -28,6 +28,12 @@ public class Subject {
         };
     }
 
+    public void printGrads() {
+        for (char grade : scores.getGrade()) {
+            System.out.println(subjectName + " " + grade);
+        }
+    }
+
     public void addScore(int score) {
         if(scores.getScore().size() < 10) {
             getScores().setScore(score, subjectType);
@@ -37,4 +43,13 @@ public class Subject {
     public void printSubject(int cnt) {
         System.out.println(cnt + ". " + subjectName);
     }
-}
+
+    public void printAllGrades(){
+        for (Character grade : scores.getGrade()) {
+            System.out.println(subjectName + " " + grade);
+        }
+    }
+
+    public void printSubject() {
+        System.out.println(subjectName);
+    }

@@ -378,6 +378,9 @@ public class CampManagementApplication {
     }
 
     private static String getStudentId() {
+        for(Student student : studentStore) {
+            System.out.println("학생이름 : " + student.getStudentId() + ", 학생 이름 : "+ student.getStudentName());
+        }
         System.out.print("\n관리할 수강생의 번호를 입력하시오...");
         return sc.nextLine();
     }
@@ -395,21 +398,21 @@ public class CampManagementApplication {
                 studentIdx = i;
             }
         }
-        Student studet = studentStore.get(studentIdx);
+        Student student = studentStore.get(studentIdx);
 
         // 기능 구현
         System.out.println("점수를 등록할 과목을 선택해주세요.");
-        studet.printAllSubject();
+        student.printAllSubject();
 
         // 점수를 입력할 과목 입력
         String selectSubject = sc.nextLine();
 
         System.out.print("점수를 입력해주세요.");
         int newScore = sc.nextInt();
-        studet.addStudentScore(selectSubject, newScore);
+        student.addStudentScore(selectSubject, newScore);
 
         // 확인하기
-        studet.printAllScores();
+        student.printAllScores();
 
         System.out.println("\n점수 등록 성공!");
     }
@@ -426,10 +429,19 @@ public class CampManagementApplication {
     // 수강생의 특정 과목 회차별 등급 조회
     private static void inquireRoundGradeBySubject() {
         String studentId = getStudentId(); // 관리할 수강생 고유 번호
-        // 기능 구현 (조회할 특정 과목)
-        System.out.println("회차별 등급을 조회합니다...");
-        // 기능 구현
-        System.out.println("\n등급 조회 성공!");
+        int studentIdx = 0;
+        for (int i = 0; i < studentStore.size(); i++) {
+            if (studentStore.get(i).getStudentId().equals(studentId)) {
+                studentIdx = i;
+            }
+
+            // 기능 구현 (조회할 특정 과목)
+            System.out.println("회차별 등급을 조회합니다...");
+            // 기능 구현
+            Student student = studentStore.get(studentIdx);
+            student.printAllGrades();
+            System.out.println("\n등급 조회 성공!");
+        }
     }
 
 }

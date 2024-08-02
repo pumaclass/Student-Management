@@ -83,6 +83,14 @@ public class Student { //수강생
         }
     }
 
+    public void printAllGrades(){
+        for (Subject mainSubject : mainSubjects) {
+            mainSubject.printAllGrades();
+        }
+        for (Subject subSubject : subSubjects) {
+            subSubject.printAllGrades();
+        }
+    }
 
     // Setter
     public void setStudentName(String studentName) {

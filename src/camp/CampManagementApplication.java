@@ -546,7 +546,7 @@ public class CampManagementApplication {
 
         System.out.println("수정할 과목의 이름을 입력해주세요.");
         student.printAllSubject();
-        String subject = sc.nextLine();
+        String subject = getSubject(student);
 
         System.out.println("수정할 회차를 입력해주세요");
         student.printAllScores();
@@ -554,8 +554,7 @@ public class CampManagementApplication {
         sc.nextLine();
 
         System.out.println("수정할 점수를 입력하세요.");
-        int newScore = sc.nextInt();
-        sc.nextLine();
+        int newScore = getScore();
 
         student.editScore(subject, round-1, newScore);
 

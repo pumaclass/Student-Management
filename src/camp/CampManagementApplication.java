@@ -303,7 +303,6 @@ public class CampManagementApplication {
             System.out.println("지금 수강생의 상태를 입력해주세요.");
             System.out.println("1: Green, 2: Yellow, 3: Red");
             int num = sc.nextInt();
-            mental = "";
             if (num == 1) {
                 mental = "Green";
                 break;

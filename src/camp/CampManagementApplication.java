@@ -131,6 +131,11 @@ public class CampManagementApplication {
             System.out.println("2. 점수 관리");
             System.out.println("3. 프로그램 종료");
             System.out.print("관리 항목을 선택하세요...");
+
+            while(!sc.hasNextInt()){    // 입력된 데이터가 숫자가 아니라면~
+                sc.next();              // 잘못 들어온 값 삭제
+                Print.plzNumber();      // Print문 출력
+            }
             int input = sc.nextInt();
             sc.nextLine();
 
@@ -158,6 +163,11 @@ public class CampManagementApplication {
             System.out.println("4. 수강생 목록 삭제");
             System.out.println("5. 메인 화면 이동");
             System.out.print("관리 항목을 선택하세요...");
+
+            while(!sc.hasNextInt()){    // 입력된 데이터가 숫자가 아니라면~
+                sc.next();              // 잘못 들어온 값 삭제
+                Print.plzNumber();      // Print문 출력
+            }
             int input = sc.nextInt();
             sc.nextLine();
 
@@ -190,8 +200,13 @@ public class CampManagementApplication {
         // 필수 과목 로직입니다.
         while (true) {
             System.out.println("원하는 필수 과목 수를 입력하세요.");
+            while(!sc.hasNextInt()){
+                sc.next();
+                Print.plzNumber();
+            }
             int ms = sc.nextInt();
             sc.nextLine();
+
             List<String> msNotSame = new ArrayList<>(); // 같은 과목을 수강하는것을 방지하기 위해 저장합니다.
 
             if (ms < 3 || ms > 5) {
@@ -237,8 +252,14 @@ public class CampManagementApplication {
         // 선택 과목 로직입니다.
         while (true) {
             System.out.println("원하는 선택 과목 수를 입력하세요.");
+
+            while(!sc.hasNextInt()){
+                sc.next();
+                Print.plzNumber();
+            }
             int ss = sc.nextInt();
             sc.nextLine();
+
             List<String> ssNotSame = new ArrayList<>(); // 같은 과목을 수강하는것을 방지하기 위해 저장합니다.
             if (ss < 2 || ss > 4) {
                 System.out.println("선택 과목은 최소 2과목 이상 4과목 이하로 선택해야 합니다. 다시 입력해 주세요");
@@ -365,7 +386,7 @@ public class CampManagementApplication {
         System.out.println();
     }
 
-    private static void displayScoreView() {
+    private static void displayScoreView() throws InterruptedException{
         boolean flag = true;
         while (flag) {
             System.out.println("==================================");
@@ -375,6 +396,11 @@ public class CampManagementApplication {
             System.out.println("3. 수강생의 특정 과목 회차별 등급 조회");
             System.out.println("4. 메인 화면 이동");
             System.out.print("관리 항목을 선택하세요...");
+
+            while(!sc.hasNextInt()){    // 입력된 데이터가 숫자가 아니라면~
+                sc.next();              // 잘못 들어온 값 삭제
+                Print.plzNumber();      // Print문 출력
+            }
             int input = sc.nextInt();
             sc.nextLine();
 
@@ -396,37 +422,109 @@ public class CampManagementApplication {
             System.out.println("학생 ID : " + student.getStudentId() + ", 학생 이름 : "+ student.getStudentName());
         }
         System.out.print("\n관리할 수강생의 번호를 입력하시오...");
-        return sc.nextLine();
+
+        while(!sc.hasNextInt()){    // 입력된 데이터가 숫자가 아니라면~
+            sc.next();              // 잘못 들어온 값 삭제
+            Print.plzNumber();      // Print문 출력
+        }
+        String studentId = "ST" + sc.nextInt();
+        sc.nextLine();
+
+        return studentId;
+    }
+
+    private static int getScore(){
+        int score;
+
+        while(true){
+            System.out.print("점수를 입력해주세요.");
+
+            while(!sc.hasNextInt()){    // 입력된 데이터가 숫자가 아니라면~
+                sc.next();              // 잘못 들어온 값 삭제
+                Print.plzNumber();      // Print문 출력
+            }
+
+            score = sc.nextInt();
+            sc.nextLine();
+
+            if(score >= 0 && score <= 100)
+                return score;
+            else
+                System.out.println("잘못 입력하셨습니다. 0 ~ 100 사이로 입력해주세요.");
+        }
+    }
+
+    private static String getSubject(Student std){
+        int idx;
+        String subjectName;
+
+        while(true) {
+            idx = sc.nextInt();
+            sc.nextLine();
+
+            if (idx >= 1 && idx <= std.subjectList().size()) {
+                subjectName = std.subjectList().get(idx - 1).getSubjectName();
+                break;
+            }
+
+            Print.plzSubject();
+        }
+            return subjectName;
     }
 
     // 수강생의 과목별 시험 회차 및 점수 등록
-    private static void createScore() {
-        System.out.println("시험 점수를 등록합니다...");
-        String studentId = getStudentId(); // 관리할 수강생 고유 번호 입력 받기
-
-
-        // studentIdx로 학생 정보 조회
-        int studentIdx = 0;
-        for(int i = 0 ; i < studentStore.size() ; i++){
-            if(studentStore.get(i).getStudentId().equals(studentId)){
-                studentIdx = i;
-            }
+    private static void createScore() throws InterruptedException {
+        if(studentStore.size() == 0 ){
+            System.out.println("등록 된 수강생이 없습니다. 수강생을 등록한 후 다시 이용해주세요.");
+            Thread.sleep(1000); // 1초 일시정지 후 동작
+            return;
         }
+
+        System.out.println("시험 점수를 등록합니다...");
+        String studentId;
+        int studentIdx = 0;
+        boolean flag = true;
+        while(flag) { // 유효한 수강생인지 조회
+            studentId = getStudentId(); // 관리할 수강생 고유 번호 입력 받기
+
+            // studentIdx로 학생 정보 조회
+            for (int i = 0; i < studentStore.size(); i++) {
+                if (studentStore.get(i).getStudentId().equals(studentId)) {
+                    studentIdx = i;
+                    flag = false;
+                    break;
+                }
+            }
+
+            if(flag)
+                System.err.println("유효한 수강생 번호가 아닙니다. 다시 입력해주세요");
+        }
+
         Student student = studentStore.get(studentIdx);
 
-        // 기능 구현
+        // 점수를 입력할 과목 선택
         System.out.println("점수를 등록할 과목을 선택해주세요.");
         student.printAllSubject();
 
-        // 점수를 입력할 과목 입력
-        String selectSubject = sc.nextLine();
+        String selectSubject = getSubject(student);
 
-        System.out.print("점수를 입력해주세요.");
-        int newScore = sc.nextInt();
+        // 과목 점수 입력
+        int newScore = getScore();
+
+        // 점수 저장
         student.addStudentScore(selectSubject, newScore);
 
+        System.out.println("StudentId : " + student.getStudentId());
+        System.out.println("subjectName : " + student.getSubjectInfo(selectSubject).getSubjectName());
+        System.out.print("score :");
+        for(int i : student.getSubjectInfo(selectSubject).getScores().getScore())
+            System.out.print(" " + i);
+        System.out.print("\nGrade :");
+        for(char i : student.getSubjectInfo(selectSubject).getScores().getGrade())
+            System.out.print(" " + i );
+
         // 확인하기
-        student.printAllScores();
+        //student.printAllScores();
 
         System.out.println("\n점수 등록 성공!");
     }
@@ -544,4 +642,5 @@ public class CampManagementApplication {
     private static void gradeAverage() {
 
     }
+
 }

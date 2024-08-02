@@ -51,58 +51,9 @@ public class Student { //수강생
         return mental;
     }
 
-    //원하는 과목 하나만 출력
-    public void printScores(String subjectName) {
-        for (int i = 0; i < mainSubjects.size(); i++) {
-            if (mainSubjects.get(i).getSubjectName().equals(subjectName) ) {
-                mainSubjects.get(i).printScores();
-            }
-        }
-        for (int i = 0; i < subSubjects.size(); i++) {
-            if (subSubjects.get(i).getSubjectName().equals(subjectName) ) {
-                subSubjects.get(i).printScores();
-            }
-        }
-    }
-
-    //모든 과목 출력
-    public void printAllScores() {
-        for (int i = 0; i < mainSubjects.size(); i++) {
-            mainSubjects.get(i).printScores();
-        }
-        for (int i = 0; i < subSubjects.size(); i++) {
-            subSubjects.get(i).printScores();
-        }
-    }
-
-    public void addStudentScore(String subjectName, int score) {
-        for (int i = 0; i < mainSubjects.size(); i++) {
-            if (mainSubjects.get(i).getSubjectName().equals(subjectName) ) {
-                mainSubjects.get(i).addScore(score);
-            }
-        }
-        for (int i = 0; i < subSubjects.size(); i++) {
-            if (subSubjects.get(i).getSubjectName().equals(subjectName) ) {
-                subSubjects.get(i).addScore(score);
-            }
-        }
-    }
-
-    public void printAllSubject(){
-        for (Subject mainSubject : mainSubjects) {
-            mainSubject.printSubject();
-        }
-        for (Subject subSubject : subSubjects) {
-            subSubject.printSubject();
-        }
-    }
-
     public void printAllGrades(){
-        for (Subject mainSubject : mainSubjects) {
-            mainSubject.printAllGrades();
-        }
-        for (Subject subSubject : subSubjects) {
-            subSubject.printAllGrades();
+        for(Subject sub : subjectList()){
+            sub.printAllGrades();
         }
     }
 
@@ -120,6 +71,64 @@ public class Student { //수강생
     }
 
 
+    public Subject getSubjectInfo(String subject){
+        int idx = 0;
+        for(int i = 0 ; i < subjectList().size() ; i++)
+            if(subjectList().get(i).getSubjectName().equals(subject))
+                idx = i;
+        return subjectList().get(idx);
+    }
 
+    //원하는 과목 하나만 출력
+    public void printScores(String subjectName) {
+        for(Subject sub : subjectList()){
+            if(sub.getSubjectName().equals(subjectName)) {
+                sub.printScores();
+                break;
+            }
+        }
+    }
 
+    //모든 과목 점수 출력
+    public void printAllScores() {
+        for(Subject sub : subjectList()){
+            sub.printScores();
+        }
+    }
+
+    // 점수 등록
+    public void addStudentScore(String subjectName, int score) {
+        for(Subject sub : subjectList()){
+            if(sub.getSubjectName().equals(subjectName))
+                sub.addScore(score);
+        }
+    }
+
+    // 모든 과목 출력
+    public void printAllSubject(){
+        int cnt = 0;
+        for(Subject sub : subjectList()){
+            sub.printSubject(++cnt);
+        }
+    }
+
+    // 수강생 과목들 하나로 정리
+    public List<Subject> subjectList(){
+        List<Subject> list = new ArrayList<>();
+        for(Subject i : mainSubjects)
+            list.add(i);
+        for(Subject i : subSubjects)
+            list.add(i);
+
+        return list;
+    }
+
+    // 수강생의 수강과목 리스트 중 입력한 과목이 있는지 조회
+    public boolean chkSubject(String subject){
+        for(Subject sub : subjectList()){
+            if(sub.getSubjectName().equals(subject))
+                return true;    // 과목 있음
+        }
+        return false;   // 과목 없음
+    }
 }

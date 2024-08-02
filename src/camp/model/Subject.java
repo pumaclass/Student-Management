@@ -17,17 +17,10 @@ public class Subject {
     }
 
     // Getter
-    public String getSubjectId() {
-        return subjectId;
-    }
-
-    public String getSubjectName() {
-        return subjectName;
-    }
-
-    public String getSubjectType() {
-        return subjectType;
-    }
+    public String   getSubjectId()      { return this.subjectId; }
+    public String   getSubjectName()    { return this.subjectName; }
+    public Score    getScores()         { return this.scores; }
+    public String   getSubjectType()    { return this.subjectType; }
 
     public void printScores() {
         for (int i = 0; i < scores.getScore().size(); i++) {
@@ -43,8 +36,12 @@ public class Subject {
 
     public void addScore(int score) {
         if(scores.getScore().size() < 10) {
-            scores.setScore(score, subjectType);
+            getScores().setScore(score, subjectType);
         }
+    }
+
+    public void printSubject(int cnt) {
+        System.out.println(cnt + ". " + subjectName);
     }
 
     public void printAllGrades(){
@@ -55,6 +52,7 @@ public class Subject {
 
     public void printSubject() {
         System.out.println(subjectName);
+
     }
 
     public void editScores(int round, int newScore) {
@@ -62,3 +60,4 @@ public class Subject {
     }
 
 }
+

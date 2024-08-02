@@ -17,8 +17,17 @@ public class Score {
         this.scores.add(score);
     }
 
-    public List<Integer>     getScore() { return this.scores; }
-    public List<Character>   getGrade() { return this.grade; }
+    public void editScore(int round, int newScore) {
+        scores.set(scores.indexOf(round), newScore);
+    }
+
+    public List<Integer> getScore() {
+        return scores;
+    }
+
+    public List<Character> getGrade() {
+        return grade;
+    }
 
     public char scoreToGrade(int score, String subjectType){
         char grade = ' '; // 초기화

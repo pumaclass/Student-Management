@@ -198,7 +198,7 @@ public class CampManagementApplication {
         // 기능 구현 (필수 과목, 선택 과목)
         sc.nextLine();
         // 필수 과목 로직입니다.
-        while(true) {
+        while (true) {
             System.out.println("원하는 필수 과목 수를 입력하세요.");
             while(!sc.hasNextInt()){
                 sc.next();
@@ -216,7 +216,7 @@ public class CampManagementApplication {
                     while (true) {
                         System.out.println("필수과목 [1: 'Java', 2: '객체지향', 3: 'Spring', 4: 'JPA', 5: 'MySQL']중에서 듣고싶은 과목을 선택하세요.");
                         String subject = sc.nextLine();
-                        if(msNotSame.contains(subject)) {
+                        if (msNotSame.contains(subject)) {
                             System.out.println("이미 수강한 과목입니다. 다시 입력해주세요.");
                             continue;
                         }
@@ -250,7 +250,7 @@ public class CampManagementApplication {
             }
         }
         // 선택 과목 로직입니다.
-        while(true) {
+        while (true) {
             System.out.println("원하는 선택 과목 수를 입력하세요.");
 
             while(!sc.hasNextInt()){
@@ -261,11 +261,11 @@ public class CampManagementApplication {
             sc.nextLine();
 
             List<String> ssNotSame = new ArrayList<>(); // 같은 과목을 수강하는것을 방지하기 위해 저장합니다.
-            if (ss < 2 || ss >= 4) {
+            if (ss < 2 || ss > 4) {
                 System.out.println("선택 과목은 최소 2과목 이상 4과목 이하로 선택해야 합니다. 다시 입력해 주세요");
             } else {
                 for (int i = 0; i < ss; i++) {
-                    while(true) {
+                    while (true) {
                         System.out.println("필수과목 [1: '디자인 패턴', 2: 'Spring Security', 3: 'Redis', 4: 'MongoDB']중에서 듣고싶은 과목을 선택하세요.");
                         String subject = sc.nextLine();
                         if (ssNotSame.contains(subject)) {
@@ -297,13 +297,34 @@ public class CampManagementApplication {
                 break;
             }
         }
+
+        String mental;
+        while (true) {
+            System.out.println("지금 수강생의 상태를 입력해주세요.");
+            System.out.println("1: Green, 2: Yellow, 3: Red");
+            int num = sc.nextInt();
+            mental = "";
+            if (num == 1) {
+                mental = "Green";
+                break;
+            } else if (num == 2) {
+                mental = "Yellow";
+                break;
+            } else if (num == 3) {
+                mental = "Red";
+                break;
+            } else {
+                System.out.println("잘못 입력했습니다.");
+            }
+        }
+
         for (Subject mainSubject : mainSubjects) {
             System.out.println(mainSubject.getSubjectId() + " " + mainSubject.getSubjectName() + " " + mainSubject.getSubjectType());
         }
         for (Subject subSubject : subSubjects) {
             System.out.println(subSubject.getSubjectId() + " " + subSubject.getSubjectName() + " " + subSubject.getSubjectType());
         }
-        Student student = new Student(sequence(INDEX_TYPE_STUDENT), studentName, mainSubjects, subSubjects); // 수강생 인스턴스 생성 코드
+        Student student = new Student(sequence(INDEX_TYPE_STUDENT), studentName, mainSubjects, subSubjects, mental); // 수강생 인스턴스 생성 코드
 
         // 기능 구현
         System.out.println(student.getStudentName() + " " + student.getStudentId());
@@ -398,7 +419,7 @@ public class CampManagementApplication {
 
     private static String getStudentId() {
         for(Student student : studentStore) {
-            System.out.println("학생이름 : " + student.getStudentId() + ", 학생 이름 : "+ student.getStudentName());
+            System.out.println("학생 ID : " + student.getStudentId() + ", 학생 이름 : "+ student.getStudentName());
         }
         System.out.print("\n관리할 수강생의 번호를 입력하시오...");
 
@@ -510,9 +531,34 @@ public class CampManagementApplication {
 
     // 수강생의 과목별 회차 점수 수정
     private static void updateRoundScoreBySubject() {
-        String studentId = getStudentId(); // 관리할 수강생 고유 번호
         // 기능 구현 (수정할 과목 및 회차, 점수)
         System.out.println("시험 점수를 수정합니다...");
+        String studentId = getStudentId(); // 관리할 수강생 고유 번호
+
+        // studentIdx로 학생 정보 조회
+        int studentIdx = 0;
+        for(int i = 0 ; i < studentStore.size() ; i++){
+            if(studentStore.get(i).getStudentId().equals(studentId)){
+                studentIdx = i;
+            }
+        }
+        Student student = studentStore.get(studentIdx);
+
+        System.out.println("수정할 과목의 이름을 입력해주세요.");
+        student.printAllSubject();
+        String subject = sc.nextLine();
+
+        System.out.println("수정할 회차를 입력해주세요");
+        student.printAllScores();
+        int round = sc.nextInt();
+        sc.nextLine();
+
+        System.out.println("수정할 점수를 입력하세요.");
+        int newScore = sc.nextInt();
+        sc.nextLine();
+
+        student.editScore(subject, round-1, newScore);
+
         // 기능 구현
         System.out.println("\n점수 수정 성공!");
     }
@@ -534,4 +580,67 @@ public class CampManagementApplication {
             System.out.println("\n등급 조회 성공!");
         }
     }
+
+    private static void changeStudentInfo() {
+        System.out.println("학생 정보를 수정합니다...");
+        String studentId = getStudentId(); // 관리할 수강생 고유 번호
+
+        // studentIdx로 학생 정보 조회
+        int studentIdx = 0;
+        for(int i = 0 ; i < studentStore.size() ; i++){
+            if(studentStore.get(i).getStudentId().equals(studentId)){
+                studentIdx = i;
+            }
+        }
+        Student student = studentStore.get(studentIdx);
+
+        System.out.println("수정할 학생 정보를 선택하세요.");
+        System.out.println("1: 수강생 이름, 2: 학생 상태, 3: 모두");
+        int num = sc.nextInt();
+        sc.nextLine();
+        while(true) {
+            if (num == 1) {
+                System.out.println("변경할 이름을 입력해주세요.");
+                String newName = sc.nextLine();
+                student.setStudentName(newName);
+                System.out.println("변경된 수강생의 이름: " + student.getStudentName());
+            } else if(num == 2) {
+                System.out.println("변경할 수강생의 상태을 입력해주세요.");
+                String newMental = sc.nextLine();
+                student.setMental(newMental);
+                System.out.println("변경된 수강생의 상태: " + student.getMental());
+            } else if(num == 3) {
+                System.out.println("변경할 이름을 입력해주세요.");
+                String newName = sc.nextLine();
+                student.setStudentName(newName);
+                System.out.println("변경할 수강생의 상태을 입력해주세요.");
+                String newMental = sc.nextLine();
+                student.setMental(newMental);
+                System.out.println("변경된 수강생의 이름: " + student.getStudentName());
+                System.out.println("변경된 수강생의 상태: " + student.getMental());
+            } else {
+                System.out.println("잘못 입력하셨습니다.");
+            }
+        }
+    }
+
+    private static void deleteStudent() {
+        System.out.println("학생을 삭제합니다...");
+        String studentId = getStudentId(); // 관리할 수강생 고유 번호
+
+        // studentIdx로 학생 정보 조회
+        int studentIdx = 0;
+        for(int i = 0 ; i < studentStore.size() ; i++){
+            if(studentStore.get(i).getStudentId().equals(studentId)){
+                studentIdx = i;
+            }
+        }
+
+        studentStore.remove(studentIdx);
+    }
+
+    private static void gradeAverage() {
+
+    }
+
 }

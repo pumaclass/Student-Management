@@ -1,46 +1,28 @@
 package camp.model;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class Score {
-    private String studentId; // 수강생 고유번호
-    private int scoreId = 0; // 회차 범위 1 ~ 10
-    private String subjectName; // 과목(필수 / 선택)
-    private int score; // 점수
-    private char grade; // 등급
+    private List<Integer> scores; // 회차별 점수
+    private List<Character> grade; // 등급
 
-    public Score(Student student, int scoreId, Subject subject, int score) {
-        this.scoreId = scoreId;
-        this.subjectName = subject.getSubjectName();
-        this.studentId = student.getStudentId();
-        this.score = score;
-        this.grade = scoreToGrade(score, subject.getSubjectType());
+    public Score() {
+        this.scores = new ArrayList<Integer>();
+        this.grade = new ArrayList<Character>();
     }
 
-    // Getter
-    public int getScoreId() { return this.scoreId; }
-    public String getSubjectName() { return this.subjectName; }
-    public String getStudentId() { return this.studentId; }
-    public int getScore() { return this.score; }
-    public char getGrade() { return this.grade; }
-
-    // Setter
-    public void setScoreId(){
-        this.scoreId = scoreId;
+    public void setScore(int score, String subjectType) {
+        this.grade.add(scoreToGrade(score, subjectType));
+        this.scores.add(score);
     }
 
-    public void setSubjectName(String subjectName){
-        this.subjectName = subjectName;
+    public List<Integer> getScore() {
+        return scores;
     }
 
-    public void setStudentId(String studentId){
-        this.studentId = studentId;
-    }
-
-    public void setScore(int score){
-        this.score = score;
-    }
-
-    public void setGrade(char grade){
-        this.grade = grade;
+    public List<Character> getGrade() {
+        return grade;
     }
 
     public char scoreToGrade(int score, String subjectType){

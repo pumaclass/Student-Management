@@ -58,14 +58,10 @@ public class Student { //수강생
     }
 
     public void editScore(String subject, int round, int score) {
-        for (int i = 0; i < mainSubjects.size(); i++) {
-            if (mainSubjects.get(i).getSubjectName().equals(subject)) {
-                mainSubjects.get(i).editScores(round, score);
-            }
-        }
-        for (int i = 0; i < subSubjects.size(); i++) {
-            if (subSubjects.get(i).getSubjectName().equals(subject)) {
-                subSubjects.get(i).editScores(round, score);
+        for(Subject sub : subjectList()){
+            if(sub.getSubjectName().equals(subject)) {
+                sub.editScores(round, score);
+                break;
             }
         }
     }
@@ -111,6 +107,7 @@ public class Student { //수강생
             sub.printSubject(++cnt);
         }
     }
+
 
     // 수강생 과목들 하나로 정리
     public List<Subject> subjectList(){

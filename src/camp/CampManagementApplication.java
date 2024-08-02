@@ -195,7 +195,6 @@ public class CampManagementApplication {
             List<String> msNotSame = new ArrayList<>(); // 같은 과목을 수강하는것을 방지하기 위해 저장합니다.
 
             if (ms < 3 || ms > 5) {
-
                 System.out.println("필수과목은 최소 3과목 이상 5과목 이하로 선택해야 합니다. 다시 입력해 주세요");
             } else {
                 for (int i = 0; i < ms; i++) {
@@ -207,23 +206,23 @@ public class CampManagementApplication {
                             continue;
                         }
                         if (subject.equals("1")) {
-                            mainSubjects.add(subjectStore.get(0));
+                            mainSubjects.add(new Subject(sequence(INDEX_TYPE_SUBJECT), "Java", SUBJECT_TYPE_MANDATORY));
                             msNotSame.add("1");
                             break;
                         } else if (subject.equals("2")) {
-                            mainSubjects.add(subjectStore.get(1));
+                            mainSubjects.add(new Subject(sequence(INDEX_TYPE_SUBJECT), "객체지향", SUBJECT_TYPE_MANDATORY));
                             msNotSame.add("2");
                             break;
                         } else if (subject.equals("3")) {
-                            mainSubjects.add(subjectStore.get(2));
+                            mainSubjects.add(new Subject(sequence(INDEX_TYPE_SUBJECT), "Spring", SUBJECT_TYPE_MANDATORY));
                             msNotSame.add("3");
                             break;
                         } else if (subject.equals("4")) {
-                            mainSubjects.add(subjectStore.get(3));
+                            mainSubjects.add(new Subject(sequence(INDEX_TYPE_SUBJECT), "JPA", SUBJECT_TYPE_MANDATORY));
                             msNotSame.add("4");
                             break;
                         } else if (subject.equals("5")) {
-                            mainSubjects.add(subjectStore.get(4));
+                            mainSubjects.add(new Subject(sequence(INDEX_TYPE_SUBJECT), "MySQL", SUBJECT_TYPE_MANDATORY));
                             msNotSame.add("5");
 
                             break;
@@ -246,29 +245,26 @@ public class CampManagementApplication {
             } else {
                 for (int i = 0; i < ss; i++) {
                     while(true) {
-
                         System.out.println("필수과목 [1: '디자인 패턴', 2: 'Spring Security', 3: 'Redis', 4: 'MongoDB']중에서 듣고싶은 과목을 선택하세요.");
-
                         String subject = sc.nextLine();
                         if (ssNotSame.contains(subject)) {
                             System.out.println("이미 수강한 과목입니다. 다시 입력해주세요.");
                             continue;
                         }
-
                         if (subject.equals("1")) {
-                            subSubjects.add(subjectStore.get(5));
+                            subSubjects.add(new Subject(sequence(INDEX_TYPE_SUBJECT), "디자인 패턴", SUBJECT_TYPE_CHOICE));
                             ssNotSame.add("1");
                             break;
                         } else if (subject.equals("2")) {
-                            subSubjects.add(subjectStore.get(6));
+                            subSubjects.add(new Subject(sequence(INDEX_TYPE_SUBJECT), "Spring Security", SUBJECT_TYPE_CHOICE));
                             ssNotSame.add("2");
                             break;
                         } else if (subject.equals("3")) {
-                            subSubjects.add(subjectStore.get(7));
+                            subSubjects.add(new Subject(sequence(INDEX_TYPE_SUBJECT), "Redis", SUBJECT_TYPE_CHOICE));
                             ssNotSame.add("3");
                             break;
                         } else if (subject.equals("4")) {
-                            subSubjects.add(subjectStore.get(8));
+                            subSubjects.add(new Subject(sequence(INDEX_TYPE_SUBJECT), "MongoDB", SUBJECT_TYPE_CHOICE));
                             ssNotSame.add("4");
 
                             break;
@@ -300,9 +296,6 @@ public class CampManagementApplication {
     private static void inquireStudent() {
         System.out.println("\n수강생 목록을 조회합니다...");
         // 기능 구현
-        for (Student student : studentStore) {
-            System.out.println("학생 Id : " + student.getStudentId() +  ", 학생 이름: " + student.getStudentName());
-        }
         // 1. 수강생 목록을 조회를 하려면
         // 2. 이 목록을 가지고 있는 이름을 찾아보면 studentStore이란걸 알 수 있음
         // 3. 조회라는 행동을 했을 때 return 할 필요 없이 눈에 바로 보여지니까 print 해야됨
@@ -395,21 +388,23 @@ public class CampManagementApplication {
                 studentIdx = i;
             }
         }
-        Student studet = studentStore.get(studentIdx);
+        Student student = studentStore.get(studentIdx);
 
         // 기능 구현
         System.out.println("점수를 등록할 과목을 선택해주세요.");
-        studet.printAllSubject();
+        student.printAllSubject();
 
         // 점수를 입력할 과목 입력
         String selectSubject = sc.nextLine();
 
         System.out.print("점수를 입력해주세요.");
         int newScore = sc.nextInt();
-        studet.addStudentScore(selectSubject, newScore);
+        student.addStudentScore(selectSubject, newScore);
 
         // 확인하기
-        studet.printAllScores();
+        System.out.println(student.getStudentId());
+        student.printScores("Java");
+        //student.printAllGrads();
 
         System.out.println("\n점수 등록 성공!");
     }

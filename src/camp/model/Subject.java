@@ -33,7 +33,12 @@ public class Subject {
         for (Integer score : scores.getScore()) {
             System.out.println(subjectName + " " + score);
         };
+    }
 
+    public void printGrads() {
+        for (char grade : scores.getGrade()) {
+            System.out.println(subjectName + " " + grade);
+        }
     }
 
     public void addScore(int score) {

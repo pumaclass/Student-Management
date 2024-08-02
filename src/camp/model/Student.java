@@ -83,12 +83,12 @@ public class Student { //수강생
         }
     }
 
-    public void printAllGrads(){
+    public void printAllGrades(){
         for (Subject mainSubject : mainSubjects) {
-            mainSubject.printGrads();
+            mainSubject.printAllGrades();
         }
         for (Subject subSubject : subSubjects) {
-            subSubject.printGrads();
+            subSubject.printAllGrades();
         }
     }
 

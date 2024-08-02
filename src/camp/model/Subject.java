@@ -47,6 +47,12 @@ public class Subject {
         }
     }
 
+    public void printAllGrades(){
+        for (Character grade : scores.getGrade()) {
+            System.out.println(subjectName + " " + grade);
+        }
+    }
+
     public void printSubject() {
         System.out.println(subjectName);
     }

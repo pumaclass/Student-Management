@@ -389,20 +389,21 @@ public class CampManagementApplication {
                 studentIdx = i;
             }
         }
+        Student studet = studentStore.get(studentIdx);
 
         // 기능 구현
         System.out.println("점수를 등록할 과목을 선택해주세요.");
-        studentStore.get(studentIdx).printAllSubject();
+        studet.printAllSubject();
 
         // 점수를 입력할 과목 입력
         String selectSubject = sc.nextLine();
 
         System.out.print("점수를 입력해주세요.");
         int newScore = sc.nextInt();
-        studentStore.get(studentIdx).addStudentScore(selectSubject, newScore);
+        studet.addStudentScore(selectSubject, newScore);
 
         // 확인하기
-        studentStore.get(studentIdx).printAllScores();
+        studet.printAllScores();
 
         System.out.println("\n점수 등록 성공!");
     }

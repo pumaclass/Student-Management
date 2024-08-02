@@ -4,21 +4,21 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Score {
-    private List<Integer> score; // 점수
+    private List<Integer> scores; // 회차별 점수
     private List<Character> grade; // 등급
 
     public Score() {
-        this.score = new ArrayList<Integer>();
+        this.scores = new ArrayList<Integer>();
         this.grade = new ArrayList<Character>();
     }
 
     public void setScore(int score, String subjectType) {
         this.grade.add(scoreToGrade(score, subjectType));
-        this.score.add(score);
+        this.scores.add(score);
     }
 
     public List<Integer> getScore() {
-        return score;
+        return scores;
     }
 
     public List<Character> getGrade() {

@@ -37,6 +37,7 @@ public class Student { //수강생
         return subSubjects;
     }
 
+    //원하는 과목 하나만 출력
     public void printScores(String subjectName) {
         for (int i = 0; i < mainSubjects.size(); i++) {
             if (mainSubjects.get(i).getSubjectName().equals(subjectName) ) {
@@ -50,6 +51,7 @@ public class Student { //수강생
         }
     }
 
+    //모든 과목 출력
     public void printAllScores() {
         for (int i = 0; i < mainSubjects.size(); i++) {
             mainSubjects.get(i).printScores();

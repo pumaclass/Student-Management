@@ -30,9 +30,9 @@ public class Subject {
     }
 
     public void printScores() {
-        for (Integer score : scores.getScore()) {
-            System.out.println(subjectName + " " + score);
-        };
+        for (int i = 0; i < scores.getScore().size(); i++) {
+            System.out.println(subjectName + " " + ( i + 1 ) + "회차: " + scores.getScore().get(i));
+        }
     }
 
     public void printGrads() {
@@ -48,13 +48,17 @@ public class Subject {
     }
 
     public void printAllGrades(){
-        for (Character grade : scores.getGrade()) {
-            System.out.println(subjectName + " " + grade);
+        for (int i = 0; i < scores.getGrade().size(); i++) {
+            System.out.println(subjectName + " " + ( i + 1 ) + "회차: " + scores.getGrade().get(i));
         }
     }
 
     public void printSubject() {
         System.out.println(subjectName);
+    }
+
+    public void editScores(int round, int newScore) {
+        scores.editScore(round, newScore);
     }
 
 }

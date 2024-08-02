@@ -17,6 +17,10 @@ public class Score {
         this.scores.add(score);
     }
 
+    public void editScore(int round, int newScore) {
+        scores.set(scores.indexOf(round), newScore);
+    }
+
     public List<Integer> getScore() {
         return scores;
     }

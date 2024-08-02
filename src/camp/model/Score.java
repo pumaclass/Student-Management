@@ -5,7 +5,7 @@ import java.util.List;
 
 public class Score {
     private List<Integer> scores; // 회차별 점수
-    private List<Character> grade; // 등급
+    private List<Character> grade; // 점수에 따른 등급
 
     public Score() {
         this.scores = new ArrayList<Integer>();
@@ -17,16 +17,11 @@ public class Score {
         this.scores.add(score);
     }
 
-    public List<Integer> getScore() {
-        return scores;
-    }
-
-    public List<Character> getGrade() {
-        return grade;
-    }
+    public List<Integer>     getScore() { return this.scores; }
+    public List<Character>   getGrade() { return this.grade; }
 
     public char scoreToGrade(int score, String subjectType){
-        char grade = 'N'; // 초기화
+        char grade = ' '; // 초기화
 
         switch(subjectType){
             case "MANDATORY":

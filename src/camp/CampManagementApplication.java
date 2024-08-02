@@ -303,7 +303,6 @@ public class CampManagementApplication {
             System.out.println("지금 수강생의 상태를 입력해주세요.");
             System.out.println("1: Green, 2: Yellow, 3: Red");
             int num = sc.nextInt();
-            mental = "";
             if (num == 1) {
                 mental = "Green";
                 break;
@@ -555,9 +554,10 @@ public class CampManagementApplication {
 
         System.out.println("수정할 점수를 입력하세요.");
         int newScore = getScore();
+        sc.nextLine();
 
         student.editScore(subject, round-1, newScore);
-
+        student.printAllScores();
         // 기능 구현
         System.out.println("\n점수 수정 성공!");
     }

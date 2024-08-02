@@ -4,20 +4,21 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Score {
-    private List<Integer> scores = new ArrayList<>(); // 점수
-    private List<Character> grades = new ArrayList<>(); // 등급
+    private List<Integer> scores; // 회차별 점수
+    private List<Character> grade; // 점수에 따른 등급
 
-    public Score() {}
+    public Score() {
+        this.scores = new ArrayList<Integer>();
+        this.grade = new ArrayList<Character>();
+    }
 
-    // Getter
-    public List<Integer> getScore() { return this.scores; }
-    public List<Character> getGrade() { return this.grades; }
-
-    // Setter
-    public void setScore(int score, String subjectType){
-        this.grades.add(scoreToGrade(score, subjectType));
+    public void setScore(int score, String subjectType) {
+        this.grade.add(scoreToGrade(score, subjectType));
         this.scores.add(score);
     }
+
+    public List<Integer>     getScore() { return this.scores; }
+    public List<Character>   getGrade() { return this.grade; }
 
     public char scoreToGrade(int score, String subjectType){
         char grade = ' '; // 초기화

@@ -369,6 +369,9 @@ public class CampManagementApplication {
     }
 
     private static String getStudentId() {
+        for(Student student : studentStore) {
+            System.out.println("학생이름 : " + student.getStudentId() + ", 학생 이름 : "+ student.getStudentName());
+        }
         System.out.print("\n관리할 수강생의 번호를 입력하시오...");
         return sc.next();
     }

@@ -18,7 +18,7 @@ public class Score {
     }
 
     public void editScore(int round, int newScore) {
-        scores.set(scores.indexOf(round), newScore);
+        scores.set(round, newScore);
     }
 
     public List<Integer> getScore() {

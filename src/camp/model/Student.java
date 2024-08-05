@@ -146,4 +146,16 @@ public class Student { //수강생
 
         return average;
     }
+
+    // 필수과목 평균 구하기
+    public double averageScore(){
+        double average = 0;
+        for (Subject mainSubject : mainSubjects) {
+            average += mainSubject.averageScore();
+        }
+
+        return average;
+    }
+
+
 }

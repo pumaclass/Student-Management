@@ -13,6 +13,12 @@ public class ScoreMagagement extends Management {
     private static Scanner sc = new Scanner(System.in);
 
     public void displayScoreView() throws InterruptedException{
+        if(studentStore.isEmpty()){ // 등록 된 수강생이 없을 경우 이용할 수 없음
+            System.out.println("등록 된 수강생이 없습니다. 수강생을 등록한 후 다시 이용해주세요.");
+            Thread.sleep(1000); // 1초 일시정지 후 동작
+            return;
+        }
+
         boolean flag = true;
         while (flag) {
             System.out.println("==================================");
@@ -31,7 +37,7 @@ public class ScoreMagagement extends Management {
                 case 3 -> inquireRoundGradeBySubject(); // 수강생의 특정 과목 회차별 등급 조회
                 case 4 -> flag = false; // 메인 화면 이동
                 default -> {
-                    System.out.println("잘못된 입력입니다.\n메인 화면 이동...");
+                    System.err.println("잘못된 입력입니다.\n메인 화면 이동...");
                     flag = false;
                 }
             }
@@ -39,40 +45,15 @@ public class ScoreMagagement extends Management {
     }
 
     // 수강생의 과목별 시험 회차 및 점수 등록
-    private void createScore() throws InterruptedException {
-        if(studentStore.isEmpty()){
-            System.out.println("등록 된 수강생이 없습니다. 수강생을 등록한 후 다시 이용해주세요.");
-            Thread.sleep(1000); // 1초 일시정지 후 동작
-            return;
-        }
-
+    private void createScore(){
         System.out.println("시험 점수를 등록합니다...");
-        String studentId;
-        int studentIdx = 0;
-        boolean flag = true;
-        while(flag) { // 유효한 수강생인지 조회
-            System.out.print("\n관리할 수강생 ID의 숫자를 입력하시오...");
-            studentId = getStudentId(); // 관리할 수강생 고유 번호 입력 받기
 
-            // studentIdx로 학생 정보 조회
-            for (int i = 0; i < studentStore.size(); i++) {
-                if (studentStore.get(i).getStudentId().equals(studentId)) {
-                    studentIdx = i;
-                    flag = false;
-                    break;
-                }
-            }
-
-            if(flag)
-                System.err.println("유효한 수강생 번호가 아닙니다. 다시 입력해주세요");
-        }
-
-        Student student = studentStore.get(studentIdx);
+        // 수강생 확인
+        Student student = studentStore.get(verifyStudentId());
 
         // 점수를 입력할 과목 선택
         System.out.println("점수를 등록할 과목을 선택해주세요.");
-        student.printAllSubject();
-
+        student.printAllSubject(); // 수강과목 리스트 출력
         String selectSubject = getSubject(student).getSubjectName();
 
         // 과목 점수 입력
@@ -86,7 +67,7 @@ public class ScoreMagagement extends Management {
         System.out.print("score :");
         for(int i : student.getSubjectInfo(selectSubject).getScores().getScore())
             System.out.print(" " + i);
-        System.out.print("\nGrade :");
+        System.out.print("\ngrade :");
         for(char i : student.getSubjectInfo(selectSubject).getScores().getGrade())
             System.out.print(" " + i );
 
@@ -100,21 +81,23 @@ public class ScoreMagagement extends Management {
     private void updateRoundScoreBySubject() {
         // 기능 구현 (수정할 과목 및 회차, 점수)
         System.out.println("시험 점수를 수정합니다...");
-        System.out.print("\n관리할 수강생 ID의 숫자를 입력하시오...");
-        String studentId = getStudentId(); // 관리할 수강생 고유 번호
+        Subject subject;
 
-        // studentIdx로 학생 정보 조회
-        int studentIdx = 0;
-        for(int i = 0 ; i < studentStore.size() ; i++){
-            if(studentStore.get(i).getStudentId().equals(studentId)){
-                studentIdx = i;
-            }
-        }
-        Student student = studentStore.get(studentIdx);
+        // 수강생 확인
+        Student student = studentStore.get(verifyStudentId());
 
         System.out.println("수정할 과목의 이름을 입력해주세요.");
-        student.printAllSubject();
-        Subject subject = getSubject(student);
+        student.printAllSubject(); // 수강과목 리스트 출력
+
+        while(true){
+            subject = getSubject(student);
+            // 등록된 점수가 없는 과목을 선택했을 경우 재선택
+            if(subject.getScores().getScore().isEmpty()){
+                System.out.println("등록된 점수가 없습니다. 다른 과목을 입력해주세요.");
+                continue;
+            }
+            break;
+        }
 
         System.out.println("수정할 회차를 입력해주세요");
         student.printSelectScore(subject);
@@ -132,17 +115,11 @@ public class ScoreMagagement extends Management {
     // 수강생의 특정 과목 회차별 등급 조회
     private void inquireRoundGradeBySubject() {
         System.out.print("\n관리할 수강생 ID의 숫자를 입력하시오...");
-        String studentId = getStudentId(); // 관리할 수강생 고유 번호
-        int studentIdx = 0;
-        for (int i = 0; i < studentStore.size(); i++) {
-            if (studentStore.get(i).getStudentId().equals(studentId)) {
-                studentIdx = i;
-            }
 
+        for (int i = 0; i < studentStore.size(); i++) {
             // 기능 구현 (조회할 특정 과목)
+            Student student = studentStore.get(verifyStudentId());
             System.out.println("회차별 등급을 조회합니다...");
-            // 기능 구현
-            Student student = studentStore.get(studentIdx);
             student.printAllGrades();
             System.out.println("\n등급 조회 성공!");
         }
@@ -167,14 +144,11 @@ public class ScoreMagagement extends Management {
         int score;
 
         while(true){
-            System.out.print("점수를 입력해주세요.");
-
+            System.out.print("점수를 입력해주세요 : ");
             score = Util.filterInt();
 
-            if(score >= 0 && score <= 100)
-                return score;
-            else
-                System.out.println("잘못 입력하셨습니다. 0 ~ 100 사이로 입력해주세요.");
+            if(score >= 0 && score <= 100)  return score;
+            else                            System.out.println("잘못 입력하셨습니다. 0 ~ 100 사이로 입력해주세요.");
         }
     }
 
@@ -195,7 +169,6 @@ public class ScoreMagagement extends Management {
                 subject = std.subjectList().get(idx - 1);
                 break;
             }
-
             Util.plzSubject();
         }
         return subject;

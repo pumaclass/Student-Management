@@ -105,4 +105,28 @@ public class Management {
         return studentId;
     }
 
+    protected int verifyStudentId(){
+        String studentId; // 관리할 수강생 고유 번호
+        int studentIdx = 0;
+        boolean flag = true;
+
+        while(flag) { // 유효한 수강생인지 조회
+            System.out.println("\n수강생 ID의 숫자를 입력하시오 : ");
+            studentId = getStudentId(); // 관리할 수강생 고유 번호 입력 받기
+
+            // studentIdx로 학생 정보 조회
+            for (int i = 0; i < studentStore.size(); i++) {
+                if (studentStore.get(i).getStudentId().equals(studentId)) {
+                    studentIdx = i;
+                    flag = false;
+                    break;
+                }
+            }
+
+            if(flag)
+                System.err.println("유효한 수강생 번호가 아닙니다. 다시 입력해주세요");
+        }
+
+        return studentIdx;
+    }
 }

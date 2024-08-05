@@ -28,7 +28,8 @@ public class ScoreMagagement extends Management {
             System.out.println("2. 수강생의 과목별 회차 점수 수정");
             System.out.println("3. 수강생의 특정 과목 회차별 등급 조회");
             System.out.println("4. 과목별 통합 등급 조회");
-            System.out.println("4. 메인 화면 이동");
+            System.out.println("5. 상태별 수강생 필수 과목 평균");
+            System.out.println("6. 메인 화면 이동");
             System.out.print("관리 항목을 선택하세요...");
 
             int input = Util.filterInt();
@@ -38,7 +39,8 @@ public class ScoreMagagement extends Management {
                 case 2 -> updateRoundScoreBySubject(); // 수강생의 과목별 회차 점수 수정
                 case 3 -> inquireRoundGradeBySubject(); // 수강생의 특정 과목 회차별 등급 조회
                 case 4 -> gradeAverage();
-                case 5 -> flag = false; // 메인 화면 이동
+                case 5 -> mentalMainAvgScore();
+                case 6 -> flag = false; // 메인 화면 이동
                 default -> {
                     System.err.println("잘못된 입력입니다.\n메인 화면 이동...");
                     flag = false;
@@ -178,6 +180,7 @@ public class ScoreMagagement extends Management {
         for (Student student : studentStore) {
             avg += student.averageScore(subject);
         }
+        avg /= studentStore.size();
         if(num <= 5) {
             grade = Score.scoreToGrade((int)avg, SUBJECT_TYPE_MANDATORY);
         } else {
@@ -185,6 +188,31 @@ public class ScoreMagagement extends Management {
         }
 
         System.out.println("과목 이름 : " + subject + ", 평균 등급:" + grade);
+
+    }
+
+    // 특정 상태인 수강생 필수 과목 평균
+    private void mentalMainAvgScore() {
+        System.out.println("원하는 수강생의 상태를 입력해주세요.");
+        System.out.println("1. Green, 2. Yellow, 3. Red");
+        int num = sc.nextInt();
+        String mental = "";
+        double avg = 0;
+
+        switch(num){
+            case 1 -> mental = "Green";
+            case 2 -> mental = "Yellow";
+            case 3 -> mental = "Red";
+        }
+
+        for (Student student : studentStore) {
+            if (student.getMental().equals(mental)){
+                avg += student.averageScore();
+            }
+        }
+        avg /= studentStore.size();
+
+        System.out.println("상태 : " + mental + ", 필수 과목 평균:" + avg);
 
     }
 

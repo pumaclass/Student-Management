@@ -1,6 +1,5 @@
 package camp;
 
-import camp.model.Score;
 import camp.model.Student;
 import camp.model.Subject;
 
@@ -100,16 +99,34 @@ public class Management {
         for(Student student : studentStore) {
             System.out.println("학생 ID : " + student.getStudentId() + ", 학생 이름 : "+ student.getStudentName());
         }
-        System.out.print("\n관리할 수강생의 번호를 입력하시오...");
 
-        while(!sc.hasNextInt()){    // 입력된 데이터가 숫자가 아니라면~
-            sc.next();              // 잘못 들어온 값 삭제
-            Print.plzNumber();      // Print문 출력
-        }
-        String studentId = "ST" + sc.nextInt();
-        sc.nextLine();
+        String studentId = "ST" + Util.filterInt();
 
         return studentId;
     }
 
+    protected int verifyStudentId(){
+        String studentId; // 관리할 수강생 고유 번호
+        int studentIdx = 0;
+        boolean flag = true;
+
+        while(flag) { // 유효한 수강생인지 조회
+            System.out.println("\n수강생 ID의 숫자를 입력하시오 : ");
+            studentId = getStudentId(); // 관리할 수강생 고유 번호 입력 받기
+
+            // studentIdx로 학생 정보 조회
+            for (int i = 0; i < studentStore.size(); i++) {
+                if (studentStore.get(i).getStudentId().equals(studentId)) {
+                    studentIdx = i;
+                    flag = false;
+                    break;
+                }
+            }
+
+            if(flag)
+                System.err.println("유효한 수강생 번호가 아닙니다. 다시 입력해주세요");
+        }
+
+        return studentIdx;
+    }
 }

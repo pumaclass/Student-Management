@@ -22,5 +22,4 @@ public class CampManagementApplication {
             System.out.println("오류 발생 이유: " + e.getMessage());
         }
     }
-
 }

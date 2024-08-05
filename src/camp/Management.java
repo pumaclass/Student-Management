@@ -24,7 +24,6 @@ public class Management {
     // 데이터 저장소
     protected static List<Student> studentStore;
     protected static List<Subject> subjectStore;
-    protected static List<Score> scoreStore;
 
     // 초기 데이터 생성
     public static void setInitData() {
@@ -76,7 +75,6 @@ public class Management {
                         SUBJECT_TYPE_CHOICE
                 )
         );
-        scoreStore = new ArrayList<>();
     }
 
     // index 자동 증가

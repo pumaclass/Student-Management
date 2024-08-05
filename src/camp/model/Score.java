@@ -17,8 +17,9 @@ public class Score {
         this.scores.add(score);
     }
 
-    public void editScore(int round, int newScore) {
+    public void editScore(int round, int newScore, String subjectType) {
         scores.set(round, newScore);
+        this.grade.set(round, scoreToGrade(newScore, subjectType));
     }
 
     public List<Integer> getScore() {

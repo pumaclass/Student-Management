@@ -56,7 +56,7 @@ public class Subject {
     }
 
     public void editScores(int round, int newScore) {
-        scores.editScore(round, newScore);
+        scores.editScore(round, newScore, subjectType);
     }
 
 }

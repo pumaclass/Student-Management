@@ -92,6 +92,11 @@ public class Student { //수강생
         }
     }
 
+    //선택 과목 점수 출력
+    public void printSelectScore(Subject sub){
+        sub.printScores();
+    }
+
     // 점수 등록
     public void addStudentScore(String subjectName, int score) {
         for(Subject sub : subjectList()){

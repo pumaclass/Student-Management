@@ -15,7 +15,7 @@ public class Util {
         Scanner sc = new Scanner(System.in);
         int answer = 0;
         while(!sc.hasNextInt()){
-            sc.next();
+            sc.next(); // 입력받은 값 날리기
             plzNumber();
         }
 

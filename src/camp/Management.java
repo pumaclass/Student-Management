@@ -105,6 +105,7 @@ public class Management {
         return studentId;
     }
 
+    // 입력된 수강생 번호와 일치하는 인덱스 값 반환
     protected int verifyStudentId(){
         String studentId; // 관리할 수강생 고유 번호
         int studentIdx = 0;

@@ -1,5 +1,6 @@
 package camp;
 
+import camp.model.Score;
 import camp.model.Student;
 import camp.model.Subject;
 
@@ -26,6 +27,7 @@ public class ScoreMagagement extends Management {
             System.out.println("1. 수강생의 과목별 시험 회차 및 점수 등록");
             System.out.println("2. 수강생의 과목별 회차 점수 수정");
             System.out.println("3. 수강생의 특정 과목 회차별 등급 조회");
+            System.out.println("4. 과목별 통합 등급 조회");
             System.out.println("4. 메인 화면 이동");
             System.out.print("관리 항목을 선택하세요...");
 
@@ -35,7 +37,8 @@ public class ScoreMagagement extends Management {
                 case 1 -> createScore(); // 수강생의 과목별 시험 회차 및 점수 등록
                 case 2 -> updateRoundScoreBySubject(); // 수강생의 과목별 회차 점수 수정
                 case 3 -> inquireRoundGradeBySubject(); // 수강생의 특정 과목 회차별 등급 조회
-                case 4 -> flag = false; // 메인 화면 이동
+                case 4 -> gradeAverage();
+                case 5 -> flag = false; // 메인 화면 이동
                 default -> {
                     System.err.println("잘못된 입력입니다.\n메인 화면 이동...");
                     flag = false;
@@ -153,7 +156,35 @@ public class ScoreMagagement extends Management {
     }
 
     // 등급 편균 구하기
-    private static void gradeAverage() {
+    private void gradeAverage() {
+        System.out.println("원하는 과목의 번호를 입력해주세요.");
+        System.out.println("1. Java, 2. 객체지향, 3. Spring, 4. JPA, 5. MySQL, 6. 디자인 패턴, 7.Spring Security, 8. Redis, 9. MongoDB");
+        int num = sc.nextInt();
+        double avg = 0;
+        String subject="";
+        char grade = 0;
+        switch(num){
+            case 1 -> subject = "Java";
+            case 2 -> subject = "객체지향";
+            case 3 -> subject = "Spring";
+            case 4 -> subject = "JPA";
+            case 5 -> subject = "MySQL";
+            case 6 -> subject = "디자인 패턴";
+            case 7 -> subject = "Spring Security";
+            case 8 -> subject = "Redis";
+            case 9 -> subject = "MongoDB";
+        }
+
+        for (Student student : studentStore) {
+            avg += student.averageScore(subject);
+        }
+        if(num <= 5) {
+            grade = Score.scoreToGrade((int)avg, SUBJECT_TYPE_MANDATORY);
+        } else {
+            grade = Score.scoreToGrade((int)avg, SUBJECT_TYPE_CHOICE);
+        }
+
+        System.out.println("과목 이름 : " + subject + ", 평균 등급:" + grade);
 
     }
 
@@ -173,4 +204,6 @@ public class ScoreMagagement extends Management {
         }
         return subject;
     }
+
+
 }

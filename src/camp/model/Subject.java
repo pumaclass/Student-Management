@@ -56,7 +56,21 @@ public class Subject {
     }
 
     public void editScores(int round, int newScore) {
-        scores.editScore(round, newScore);
+        scores.editScore(round, newScore, subjectType);
+    }
+
+    // 수강생 과목별 평균
+    public double averageScore(){
+        List<Integer> score = new ArrayList<>();
+        double average = 0;
+
+        score = this.scores.getScore();
+
+        for (Integer s : score) {
+            average = (double) s / score.size();
+        }
+
+        return average;
     }
 
 }

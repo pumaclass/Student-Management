@@ -17,8 +17,9 @@ public class Score {
         this.scores.add(score);
     }
 
-    public void editScore(int round, int newScore) {
+    public void editScore(int round, int newScore, String subjectType) {
         scores.set(round, newScore);
+        this.grade.set(round, scoreToGrade(newScore, subjectType));
     }
 
     public List<Integer> getScore() {
@@ -29,7 +30,7 @@ public class Score {
         return grade;
     }
 
-    public char scoreToGrade(int score, String subjectType){
+    public static char scoreToGrade(int score, String subjectType){
         char grade = ' '; // 초기화
 
         switch(subjectType){

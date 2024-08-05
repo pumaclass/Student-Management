@@ -29,7 +29,7 @@ public class StudentManagement extends Management{
 
             while(!sc.hasNextInt()){    // 입력된 데이터가 숫자가 아니라면~
                 sc.next();              // 잘못 들어온 값 삭제
-                Print.plzNumber();      // Print문 출력
+                Util.plzNumber();      // Print문 출력
             }
             int input = sc.nextInt();
             sc.nextLine();
@@ -61,12 +61,7 @@ public class StudentManagement extends Management{
         // 필수 과목 로직입니다.
         while (true) {
             System.out.println("원하는 필수 과목 수를 입력하세요.");
-            while(!sc.hasNextInt()){
-                sc.next();
-                Print.plzNumber();
-            }
-            int ms = sc.nextInt();
-            sc.nextLine();
+            int ms = Util.filterInt();
 
             List<String> msNotSame = new ArrayList<>(); // 같은 과목을 수강하는것을 방지하기 위해 저장합니다.
 
@@ -113,13 +108,7 @@ public class StudentManagement extends Management{
         // 선택 과목 로직입니다.
         while (true) {
             System.out.println("원하는 선택 과목 수를 입력하세요.");
-
-            while(!sc.hasNextInt()){
-                sc.next();
-                Print.plzNumber();
-            }
-            int ss = sc.nextInt();
-            sc.nextLine();
+            int ss = Util.filterInt();
 
             List<String> ssNotSame = new ArrayList<>(); // 같은 과목을 수강하는것을 방지하기 위해 저장합니다.
             if (ss < 2 || ss > 4) {
@@ -222,7 +211,7 @@ public class StudentManagement extends Management{
         sc.nextLine();
 
         System.out.println("\n수정할 수강생의 고유번호(ID)를 입력해주세요. ");
-        String targetStudentId = sc.next();
+        String targetStudentId = getStudentId();
         sc.nextLine();
 
         System.out.println("\n새 이름을 입력해주세요. ");
@@ -243,14 +232,25 @@ public class StudentManagement extends Management{
     // 수강생 목록 삭제
     private void removeStudent() {
         System.out.println("학생을 삭제합니다...");
-        String studentId = getStudentId(); // 관리할 수강생 고유 번호
-
-        // studentIdx로 학생 정보 조회
+        String studentId; // 관리할 수강생 고유 번호
         int studentIdx = 0;
-        for(int i = 0 ; i < studentStore.size() ; i++){
-            if(studentStore.get(i).getStudentId().equals(studentId)){
-                studentIdx = i;
+        boolean flag = true;
+
+        while(flag) { // 유효한 수강생인지 조회
+            System.out.print("\n관리할 수강생 ID의 숫자를 입력하시오...");
+            studentId = getStudentId(); // 관리할 수강생 고유 번호 입력 받기
+
+            // studentIdx로 학생 정보 조회
+            for (int i = 0; i < studentStore.size(); i++) {
+                if (studentStore.get(i).getStudentId().equals(studentId)) {
+                    studentIdx = i;
+                    flag = false;
+                    break;
+                }
             }
+
+            if(flag)
+                System.err.println("유효한 수강생 번호가 아닙니다. 다시 입력해주세요");
         }
 
         studentStore.remove(studentIdx);
@@ -259,14 +259,26 @@ public class StudentManagement extends Management{
     private void changeStudentInfo() {
         System.out.println("학생 정보를 수정합니다...");
         String studentId = getStudentId(); // 관리할 수강생 고유 번호
-
-        // studentIdx로 학생 정보 조회
         int studentIdx = 0;
-        for(int i = 0 ; i < studentStore.size() ; i++){
-            if(studentStore.get(i).getStudentId().equals(studentId)){
-                studentIdx = i;
+        boolean flag = true;
+
+        while(flag) { // 유효한 수강생인지 조회
+            System.out.print("\n관리할 수강생 ID의 숫자를 입력하시오...");
+            studentId = getStudentId(); // 관리할 수강생 고유 번호 입력 받기
+
+            // studentIdx로 학생 정보 조회
+            for (int i = 0; i < studentStore.size(); i++) {
+                if (studentStore.get(i).getStudentId().equals(studentId)) {
+                    studentIdx = i;
+                    flag = false;
+                    break;
+                }
             }
+
+            if(flag)
+                System.err.println("유효한 수강생 번호가 아닙니다. 다시 입력해주세요");
         }
+
         Student student = studentStore.get(studentIdx);
 
         System.out.println("수정할 학생 정보를 선택하세요.");

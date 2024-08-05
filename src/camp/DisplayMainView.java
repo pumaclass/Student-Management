@@ -19,7 +19,7 @@ public class DisplayMainView {
 
             while(!sc.hasNextInt()){    // 입력된 데이터가 숫자가 아니라면~
                 sc.next();              // 잘못 들어온 값 삭제
-                Print.plzNumber();      // Print문 출력
+                Util.plzNumber();      // Print문 출력
             }
             int input = sc.nextInt();
             sc.nextLine();

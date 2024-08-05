@@ -1,6 +1,5 @@
 package camp;
 
-import camp.model.Score;
 import camp.model.Student;
 import camp.model.Subject;
 
@@ -100,14 +99,8 @@ public class Management {
         for(Student student : studentStore) {
             System.out.println("학생 ID : " + student.getStudentId() + ", 학생 이름 : "+ student.getStudentName());
         }
-        System.out.print("\n관리할 수강생의 번호를 입력하시오...");
 
-        while(!sc.hasNextInt()){    // 입력된 데이터가 숫자가 아니라면~
-            sc.next();              // 잘못 들어온 값 삭제
-            Print.plzNumber();      // Print문 출력
-        }
-        String studentId = "ST" + sc.nextInt();
-        sc.nextLine();
+        String studentId = "ST" + Util.filterInt();
 
         return studentId;
     }

@@ -1,6 +1,7 @@
 package camp;
 
 import camp.model.Student;
+import camp.model.Subject;
 
 import java.util.Scanner;
 
@@ -22,12 +23,7 @@ public class ScoreMagagement extends Management {
             System.out.println("4. 메인 화면 이동");
             System.out.print("관리 항목을 선택하세요...");
 
-            while(!sc.hasNextInt()){    // 입력된 데이터가 숫자가 아니라면~
-                sc.next();              // 잘못 들어온 값 삭제
-                Print.plzNumber();      // Print문 출력
-            }
-            int input = sc.nextInt();
-            sc.nextLine();
+            int input = Util.filterInt();
 
             switch (input) {
                 case 1 -> createScore(); // 수강생의 과목별 시험 회차 및 점수 등록
@@ -55,6 +51,7 @@ public class ScoreMagagement extends Management {
         int studentIdx = 0;
         boolean flag = true;
         while(flag) { // 유효한 수강생인지 조회
+            System.out.print("\n관리할 수강생 ID의 숫자를 입력하시오...");
             studentId = getStudentId(); // 관리할 수강생 고유 번호 입력 받기
 
             // studentIdx로 학생 정보 조회
@@ -76,7 +73,7 @@ public class ScoreMagagement extends Management {
         System.out.println("점수를 등록할 과목을 선택해주세요.");
         student.printAllSubject();
 
-        String selectSubject = getSubject(student);
+        String selectSubject = getSubject(student).getSubjectName();
 
         // 과목 점수 입력
         int newScore = getScore();
@@ -103,6 +100,7 @@ public class ScoreMagagement extends Management {
     private void updateRoundScoreBySubject() {
         // 기능 구현 (수정할 과목 및 회차, 점수)
         System.out.println("시험 점수를 수정합니다...");
+        System.out.print("\n관리할 수강생 ID의 숫자를 입력하시오...");
         String studentId = getStudentId(); // 관리할 수강생 고유 번호
 
         // studentIdx로 학생 정보 조회
@@ -116,17 +114,16 @@ public class ScoreMagagement extends Management {
 
         System.out.println("수정할 과목의 이름을 입력해주세요.");
         student.printAllSubject();
-        String subject = getSubject(student);
+        Subject subject = getSubject(student);
 
         System.out.println("수정할 회차를 입력해주세요");
-        student.printAllScores();
-        int round = sc.nextInt();
-        sc.nextLine();
+        student.printSelectScore(subject);
+        int round = getRound(student, subject.getSubjectName());
 
         System.out.println("수정할 점수를 입력하세요.");
         int newScore = getScore();
 
-        student.editScore(subject, round-1, newScore);
+        student.editScore(subject.getSubjectName(), round-1, newScore);
         student.printAllScores();
         // 기능 구현
         System.out.println("\n점수 수정 성공!");
@@ -134,6 +131,7 @@ public class ScoreMagagement extends Management {
 
     // 수강생의 특정 과목 회차별 등급 조회
     private void inquireRoundGradeBySubject() {
+        System.out.print("\n관리할 수강생 ID의 숫자를 입력하시오...");
         String studentId = getStudentId(); // 관리할 수강생 고유 번호
         int studentIdx = 0;
         for (int i = 0; i < studentStore.size(); i++) {
@@ -150,6 +148,20 @@ public class ScoreMagagement extends Management {
         }
     }
 
+    private int getRound(Student student, String subject){
+        int round;
+
+        while(true){
+            round = Util.filterInt();
+
+            if(round > 0 && round <= student.getSubjectInfo(subject).getScores().getScore().size())
+                break;
+
+            System.out.println("잘못 입력하셨습니다. 수정할 회차를 다시 입력해주세요.");
+        }
+
+        return round;
+    }
 
     private int getScore(){
         int score;
@@ -157,13 +169,7 @@ public class ScoreMagagement extends Management {
         while(true){
             System.out.print("점수를 입력해주세요.");
 
-            while(!sc.hasNextInt()){    // 입력된 데이터가 숫자가 아니라면~
-                sc.next();              // 잘못 들어온 값 삭제
-                Print.plzNumber();      // Print문 출력
-            }
-
-            score = sc.nextInt();
-            sc.nextLine();
+            score = Util.filterInt();
 
             if(score >= 0 && score <= 100)
                 return score;
@@ -177,21 +183,21 @@ public class ScoreMagagement extends Management {
 
     }
 
-    private String getSubject(Student std){
+    private Subject getSubject(Student std){
         int idx;
-        String subjectName;
+        Subject subject;
 
         while(true) {
             idx = sc.nextInt();
             sc.nextLine();
 
             if (idx >= 1 && idx <= std.subjectList().size()) {
-                subjectName = std.subjectList().get(idx - 1).getSubjectName();
+                subject = std.subjectList().get(idx - 1);
                 break;
             }
 
-            Print.plzSubject();
+            Util.plzSubject();
         }
-        return subjectName;
+        return subject;
     }
 }

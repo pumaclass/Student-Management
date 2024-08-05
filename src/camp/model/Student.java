@@ -128,4 +128,17 @@ public class Student { //수강생
         }
         return false;   // 과목 없음
     }
+
+    // 수강생 과목별 평균
+    public double averageScore(String subjectName){
+        double average = 0;
+
+        for(Subject sub : subjectList()){
+            if(sub.getSubjectName().equals(subjectName)) {
+                average = sub.averageScore();
+            }
+        }
+
+        return average;
+    }
 }

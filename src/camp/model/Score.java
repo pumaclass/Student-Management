@@ -30,7 +30,7 @@ public class Score {
         return grade;
     }
 
-    public char scoreToGrade(int score, String subjectType){
+    public static char scoreToGrade(int score, String subjectType){
         char grade = ' '; // 초기화
 
         switch(subjectType){

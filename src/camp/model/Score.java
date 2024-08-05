@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Score {
-    private List<Integer> scores; // 회차별 점수
+    private List<Integer>   scores; // 회차별 점수
     private List<Character> grade; // 점수에 따른 등급
 
     public Score() {
@@ -22,10 +22,9 @@ public class Score {
         this.grade.set(round, scoreToGrade(newScore, subjectType));
     }
 
-    public List<Integer> getScore() {
+    public List<Integer>   getScore() {
         return scores;
     }
-
     public List<Character> getGrade() {
         return grade;
     }

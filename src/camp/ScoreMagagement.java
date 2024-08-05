@@ -119,8 +119,6 @@ public class ScoreMagagement extends Management {
 
     // 수강생의 특정 과목 회차별 등급 조회
     private void inquireRoundGradeBySubject() {
-        System.out.print("\n관리할 수강생 ID의 숫자를 입력하시오...");
-
         for (int i = 0; i < studentStore.size(); i++) {
             // 기능 구현 (조회할 특정 과목)
             Student student = studentStore.get(verifyStudentId());
@@ -161,7 +159,7 @@ public class ScoreMagagement extends Management {
     private void gradeAverage() {
         System.out.println("원하는 과목의 번호를 입력해주세요.");
         System.out.println("1. Java, 2. 객체지향, 3. Spring, 4. JPA, 5. MySQL, 6. 디자인 패턴, 7.Spring Security, 8. Redis, 9. MongoDB");
-        int num = sc.nextInt();
+        int num = Util.filterInt();
         double avg = 0;
         String subject="";
         char grade = 0;
@@ -195,7 +193,7 @@ public class ScoreMagagement extends Management {
     private void mentalMainAvgScore() {
         System.out.println("원하는 수강생의 상태를 입력해주세요.");
         System.out.println("1. Green, 2. Yellow, 3. Red");
-        int num = sc.nextInt();
+        int num = Util.filterInt();
         String mental = "";
         double avg = 0;
 
@@ -221,8 +219,7 @@ public class ScoreMagagement extends Management {
         Subject subject;
 
         while(true) {
-            idx = sc.nextInt();
-            sc.nextLine();
+            idx = Util.filterInt();
 
             if (idx >= 1 && idx <= std.subjectList().size()) {
                 subject = std.subjectList().get(idx - 1);

@@ -5,7 +5,6 @@ import camp.model.Subject;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 import java.util.Scanner;
 
 public class StudentManagement extends Management{
@@ -202,12 +201,16 @@ public class StudentManagement extends Management{
         System.out.println("상태별 수강생 목록을 조회합니다. ");
         System.out.println("조회하고 싶은 상태를 입력해주세요.");
         String mental = Student.choiceMental();
+        boolean exist = false;
         System.out.println("조회할 상태 : " + mental);
         for(Student student : studentStore){
-            if(student.getMental().equals(mental))
+            if(student.getMental().equals(mental)) {
+                exist = true;
                 System.out.println("[ " + student.getStudentName() + " ] ");
+            }
         }
-        System.out.println("상태가 " + mental + "인 학생들 조회 성공!");
+        if(exist) System.out.println("상태가 " + mental + "인 학생들 조회 성공!");
+        else      System.out.println("상태가 " + mental + "인 학생이 없습니다.");
     }
 
     private void changeStudentInfo() {

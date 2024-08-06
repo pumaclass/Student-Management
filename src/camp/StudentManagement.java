@@ -8,7 +8,6 @@ import java.util.List;
 import java.util.Scanner;
 
 public class StudentManagement extends Management{
-
     // 스캐너
     private static Scanner sc = new Scanner(System.in);
 
@@ -22,7 +21,7 @@ public class StudentManagement extends Management{
             System.out.println("수강생 관리 실행 중...");
             System.out.println("1. 수강생 등록");
             System.out.println("2. 수강생 목록 조회");
-            System.out.println("3. 수강생 목록 수정");
+            System.out.println("3. 수강생 정보 수정");
             System.out.println("4. 수강생 목록 삭제");
             System.out.println("5. 메인 화면 이동");
             System.out.print("관리 항목을 선택하세요...");
@@ -32,7 +31,7 @@ public class StudentManagement extends Management{
             switch (input) {
                 case 1 -> createStudent(); // 수강생 등록
                 case 2 -> inquireStudent(); // 수강생 목록 조회
-                case 3 -> modifyStudent();  // 수강생 목록 수정
+                case 3 -> changeStudentInfo(); // 수강생 정보 수정
                 case 4 -> removeStudent();  // 수강생 목록 삭제
                 case 5 -> flag = false; // 메인 화면 이동
                 default -> {
@@ -143,24 +142,7 @@ public class StudentManagement extends Management{
             }
         }
 
-        String mental;
-        while (true) {
-            System.out.println("지금 수강생의 상태를 입력해주세요.");
-            System.out.println("1: Green, 2: Yellow, 3: Red");
-            int num = sc.nextInt();
-            if (num == 1) {
-                mental = "Green";
-                break;
-            } else if (num == 2) {
-                mental = "Yellow";
-                break;
-            } else if (num == 3) {
-                mental = "Red";
-                break;
-            } else {
-                System.out.println("잘못 입력했습니다.");
-            }
-        }
+        String mental = Student.choiceMental();
 
         for (Subject mainSubject : mainSubjects) {
             System.out.println(mainSubject.getSubjectId() + " " + mainSubject.getSubjectName() + " " + mainSubject.getSubjectType());
@@ -214,31 +196,6 @@ public class StudentManagement extends Management{
     }
 
 
-    // 수강생 목록 수정
-    private void modifyStudent() {
-        System.out.println("\n수정할 수강생의 이름을 입력해주세요.");
-        String targetStudentName = sc.next();
-        sc.nextLine();
-
-        System.out.println("\n수정할 수강생의 고유번호(ID)의 숫자를 입력해주세요.");
-        String targetStudentId = getStudentId();
-        sc.nextLine();
-
-        System.out.println("\n새 이름을 입력해주세요. ");
-        String newUserName = sc.next();
-        sc.nextLine();
-
-        for (Student student : studentStore) {
-            if (student.getStudentId().equals(targetStudentId)) {
-                student.setStudentName(newUserName);
-                break;
-            }
-        }
-
-        System.out.println("\n" + targetStudentName +"님이"+ newUserName + "으로 변경되었습니다.");
-        System.out.println("수정 완료");
-    }
-
     // 수강생 목록 삭제
     private void removeStudent() {
         System.out.println("학생을 삭제합니다...");
@@ -248,38 +205,39 @@ public class StudentManagement extends Management{
     private void changeStudentInfo() {
         System.out.println("학생 정보를 수정합니다...");
         Student student = studentStore.get(verifyStudentId());
+        String beforeName = "";
 
         System.out.println("수정할 학생 정보를 선택하세요.");
         System.out.println("1: 수강생 이름, 2: 학생 상태, 3: 모두");
-        int num = sc.nextInt();
-        sc.nextLine();
+
         while(true) {
+            int num = Util.filterInt();
+
             if (num == 1) {
                 System.out.println("변경할 이름을 입력해주세요.");
                 String newName = sc.nextLine();
+                beforeName = student.getStudentName();
                 student.setStudentName(newName);
-                System.out.println("변경된 수강생의 이름: " + student.getStudentName());
+                System.out.println(beforeName +" 님이 "+ newName + "으로 변경되었습니다.");
+                break;
             } else if(num == 2) {
                 System.out.println("변경할 수강생의 상태을 입력해주세요.");
-                String newMental = sc.nextLine();
-                student.setMental(newMental);
+                student.setMental(student.choiceMental());
                 System.out.println("변경된 수강생의 상태: " + student.getMental());
+                break;
             } else if(num == 3) {
                 System.out.println("변경할 이름을 입력해주세요.");
                 String newName = sc.nextLine();
                 student.setStudentName(newName);
+
                 System.out.println("변경할 수강생의 상태을 입력해주세요.");
-                String newMental = sc.nextLine();
-                student.setMental(newMental);
-                System.out.println("변경된 수강생의 이름: " + student.getStudentName());
+                student.setMental(student.choiceMental());
+                System.out.println(beforeName +" 님이 "+ newName + "으로 변경되었습니다.");
                 System.out.println("변경된 수강생의 상태: " + student.getMental());
+                break;
             } else {
                 System.out.println("잘못 입력하셨습니다.");
             }
         }
     }
-
-
-
-
 }

@@ -1,13 +1,10 @@
 package camp;
 
-import java.util.Scanner;
-
 public class DisplayMainView {
 
-    public void displayMainView() throws InterruptedException {
+    public static void displayMainView() throws InterruptedException {
         ScoreMagagement scoreMagagement = new ScoreMagagement();
         StudentManagement studentManagement = new StudentManagement();
-        Scanner sc = new Scanner(System.in);
         boolean flag = true;
         while (flag) {
             System.out.println("\n==================================");

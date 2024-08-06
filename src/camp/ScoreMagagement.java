@@ -118,14 +118,12 @@ public class ScoreMagagement extends Management {
     }
 
     // 수강생의 특정 과목 회차별 등급 조회
-    private void inquireRoundGradeBySubject() throws InterruptedException{
-        for (int i = 0; i < studentStore.size(); i++) {
-            // 기능 구현 (조회할 특정 과목)
-            Student student = studentStore.get(verifyStudentId());
-            System.out.println("회차별 등급을 조회합니다...");
-            student.printAllGrades();
-            System.out.println("\n등급 조회 성공!");
-        }
+    private void inquireRoundGradeBySubject() throws InterruptedException {
+        // 기능 구현 (조회할 특정 과목)
+        Student student = studentStore.get(verifyStudentId());
+        System.out.println("회차별 등급을 조회합니다...");
+        student.printAllGrades();
+        System.out.println("\n등급 조회 성공!");
     }
 
     private int getRound(Student student, String subject) throws InterruptedException {
@@ -203,12 +201,14 @@ public class ScoreMagagement extends Management {
             case 3 -> mental = "Red";
         }
 
+        int count = 0;
         for (Student student : studentStore) {
             if (student.getMental().equals(mental)){
+                count++;
                 avg += student.averageScore();
             }
         }
-        avg /= studentStore.size();
+        avg /= count;
 
         System.out.println("상태 : " + mental + ", 필수 과목 평균:" + avg);
 
@@ -229,6 +229,4 @@ public class ScoreMagagement extends Management {
         }
         return subject;
     }
-
-
 }

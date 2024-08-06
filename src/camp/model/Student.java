@@ -122,24 +122,34 @@ public class Student { //수강생
     // 수강생 과목별 평균
     public double averageScore(String subjectName){
         double average = 0;
+        int count = 0;
 
         for(Subject sub : subjectList()){
             if(sub.getSubjectName().equals(subjectName)) {
-                average = sub.averageScore();
+                double score =  sub.averageScore();
+                if (score != -1) {
+                    average += score;
+                    count++;
+                }
             }
         }
 
-        return average;
+        return average / count;
     }
 
     // 필수과목 평균 구하기
     public double averageScore(){
         double average = 0;
+        int count = 0;
         for (Subject mainSubject : mainSubjects) {
-            average += mainSubject.averageScore();
+            double score =  mainSubject.averageScore();
+            if (score != -1) {
+                average += score;
+                count++;
+            }
         }
 
-        return average;
+        return average / count;
     }
 
 

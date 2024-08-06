@@ -110,7 +110,7 @@ public class StudentManagement extends Management{
             } else {
                 for (int i = 0; i < ss; i++) {
                     while (true) {
-                        System.out.println("필수과목 [1: '디자인 패턴', 2: 'Spring Security', 3: 'Redis', 4: 'MongoDB']중에서 듣고싶은 과목을 선택하세요.");
+                        System.out.println("선택과목 [1: '디자인 패턴', 2: 'Spring Security', 3: 'Redis', 4: 'MongoDB']중에서 듣고싶은 과목을 선택하세요.");
                         String subject = sc.nextLine();
                         if (ssNotSame.contains(subject)) {
                             System.out.println("이미 수강한 과목입니다. 다시 입력해주세요.");
@@ -171,15 +171,30 @@ public class StudentManagement extends Management{
         // 6. 조회필수정보: 고유번호와 이름 -> private이라 직접적으로 접근 불가능 그래서 getter 사용
         // getter 메소드가 무엇인지 정리하면서 해보기 (고유번호/이름 을 반환하는 메소드이름)
 
-        for (int i = 0; i < studentStore.size(); i++) { // 여기에서 int는 몇번돌지를 선택하는거라 int 를 쓰면돼 / size는 갯수
-            studentStore.get(i); // index=i / i번째 student를 가져오겠따 -> 가져왔으니 어디에 할당을 시켜줄지 생각하기
-            Student studentInfo = studentStore.get(i); // studentinfo는 store 에서 등록된 i에서 가져온 학생
-            System.out.println("조회하신 학생의 고유번호는 " + studentInfo.getStudentId() + " 입니다.");
-            System.out.println("조회하신 학생의 이름은 " + studentInfo.getStudentName() + " 입니다.");
+
+        for (Student studentInfo : studentStore) {
+            System.out.println("==================================");
+            System.out.println("수강생 ID: " + studentInfo.getStudentId());
+            System.out.println("수강생 이름: " + studentInfo.getStudentName());
+            System.out.println("수강생 상태: " + studentInfo.getMental());
+
+            System.out.print("필수과목: ");
+            for (Subject mainSubject : studentInfo.getMainSubjects()) {
+                System.out.print("[ " + mainSubject.getSubjectName() + " ] ");
+            }
+
+            System.out.print("\n선택과목: ");
+            for (Subject subSubject : studentInfo.getSubSubjects()) {
+                System.out.print("[ " + subSubject.getSubjectName() + " ] ");
+            }
+
+
+            System.out.println("\n==================================");
         }
 
         System.out.println("\n수강생 목록 조회 성공!");
     }
+
 
     // 수강생 목록 삭제
     private void removeStudent() {

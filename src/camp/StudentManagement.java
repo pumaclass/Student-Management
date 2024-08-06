@@ -5,6 +5,7 @@ import camp.model.Subject;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.Scanner;
 
 public class StudentManagement extends Management{
@@ -23,7 +24,8 @@ public class StudentManagement extends Management{
             System.out.println("2. 수강생 목록 조회");
             System.out.println("3. 수강생 정보 수정");
             System.out.println("4. 수강생 목록 삭제");
-            System.out.println("5. 메인 화면 이동");
+            System.out.println("5. 상태별 수강생 목록 조회");
+            System.out.println("6. 메인 화면 이동");
             System.out.print("관리 항목을 선택하세요...");
 
             int input = Util.filterInt();
@@ -33,7 +35,8 @@ public class StudentManagement extends Management{
                 case 2 -> inquireStudent(); // 수강생 목록 조회
                 case 3 -> changeStudentInfo(); // 수강생 정보 수정
                 case 4 -> removeStudent();  // 수강생 목록 삭제
-                case 5 -> flag = false; // 메인 화면 이동
+                case 5 -> mentalSort();     // 상태별 수강생 목록 조회
+                case 6 -> flag = false; // 메인 화면 이동
                 default -> {
                     System.err.println("잘못된 입력입니다.\n메인 화면 이동...");
                     flag = false;
@@ -200,6 +203,51 @@ public class StudentManagement extends Management{
     private void removeStudent() {
         System.out.println("학생을 삭제합니다...");
         studentStore.remove(verifyStudentId());
+    }
+
+    // 상태별 수강생 목록 조회
+    private void mentalSort() {
+        System.out.println("상태별 수강생 목록을 조회합니다. ");
+
+        while (true) {
+            System.out.println("조회하고 싶은 상태를 입력해주세요.");
+            System.out.println("1: Green, 2: Yellow, 3: Red");
+            int num = sc.nextInt();
+            if (num == 1) {
+                System.out.print("상태 - Green : ");
+                for (int i = 0; i < studentStore.size(); i++) {
+                    studentStore.get(i);
+                    Student studentInfo = studentStore.get(i);
+                    if (Objects.equals(studentInfo.getMental(), "Green")){
+                        System.out.print("[ " + studentInfo.getStudentName() + " ] "); }
+                }
+                System.out.println("\n상태가 Green 학생들 조회 성공!");
+                break;
+
+            } else if (num == 2) {
+                System.out.print("상태가 - Yellow : ");
+                for (int i = 0; i < studentStore.size(); i++) {
+                    studentStore.get(i);
+                    Student studentInfo = studentStore.get(i);
+                    if (Objects.equals(studentInfo.getMental(), "Yellow")){
+                        System.out.print("[ " + studentInfo.getStudentName() + " ] ");}
+                }
+                System.out.println("\n상태가 Yellow 학생들 조회 성공!");
+                break;
+            } else if (num == 3) {
+                System.out.print("상태 - Red : ");
+                for (int i = 0; i < studentStore.size(); i++) {
+                    studentStore.get(i);
+                    Student studentInfo = studentStore.get(i);
+                    if (Objects.equals(studentInfo.getMental(), "Red")){
+                        System.out.print("[ " + studentInfo.getStudentName() + " ] ");}
+                }
+                System.out.println("\n상태가 Red 학생들 조회 성공!");
+                break;
+            } else {
+                System.out.println("잘못 입력했습니다. 다시 입력해주세요. ");
+            }
+        }
     }
 
     private void changeStudentInfo() {

@@ -58,14 +58,17 @@ public class Subject {
 
     // 수강생 과목별 평균
     public double averageScore(){
-        List<Integer> score = new ArrayList<>();
+        List<Integer> score;
         double average = 0;
 
         score = this.scores.getScore();
 
         for (Integer s : score)
-            average = (double) s / score.size();
+            average += s;
 
+        average /= score.size();
+        if (score.isEmpty())
+            return -1;
         return average;
     }
 }

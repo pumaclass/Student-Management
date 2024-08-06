@@ -37,7 +37,7 @@ public class ScoreMagagement extends Management {
             switch (input) {
                 case 1 -> createScore(); // 수강생의 과목별 시험 회차 및 점수 등록
                 case 2 -> updateRoundScoreBySubject(); // 수강생의 과목별 회차 점수 수정
-                case 3 -> inquireRoundGradeBySubject(); // 수강생의 특정 과목 회차별 등급 조회
+                case 3 -> studentAllSubjectScore(); // 수강생의 모든 과목 점수 조회
                 case 4 -> gradeAverage();
                 case 5 -> mentalMainAvgScore();
                 case 6 -> flag = false; // 메인 화면 이동
@@ -117,8 +117,8 @@ public class ScoreMagagement extends Management {
         System.out.println("\n점수 수정 성공!");
     }
 
-    // 수강생의 특정 과목 회차별 등급 조회
-    private void inquireRoundGradeBySubject() throws InterruptedException {
+    // 수강생의 모든 과목 점수 조회
+    private void studentAllSubjectScore() throws InterruptedException {
         // 기능 구현 (조회할 특정 과목)
         Student student = studentStore.get(verifyStudentId());
         System.out.println("회차별 등급을 조회합니다...");
@@ -189,29 +189,36 @@ public class ScoreMagagement extends Management {
 
     // 특정 상태인 수강생 필수 과목 평균
     private void mentalMainAvgScore() throws InterruptedException {
-        System.out.println("원하는 수강생의 상태를 입력해주세요.");
-        System.out.println("1. Green, 2. Yellow, 3. Red");
-        int num = Util.filterInt();
-        String mental = "";
-        double avg = 0;
+        while(true) {
+            System.out.println("원하는 수강생의 상태를 입력해주세요.");
+            System.out.println("1. Green, 2. Yellow, 3. Red");
+            int num = Util.filterInt();
+            String mental = "";
+            double avg = 0;
 
-        switch(num){
-            case 1 -> mental = "Green";
-            case 2 -> mental = "Yellow";
-            case 3 -> mental = "Red";
-        }
-
-        int count = 0;
-        for (Student student : studentStore) {
-            if (student.getMental().equals(mental)){
-                count++;
-                avg += student.averageScore();
+            switch(num){
+                case 1 -> mental = "Green";
+                case 2 -> mental = "Yellow";
+                case 3 -> mental = "Red";
             }
+
+            int count = 0;
+            for (Student student : studentStore) {
+                if (student.getMental().equals(mental)){
+                    count++;
+                    avg += student.averageScore();
+                }
+            }
+            if (count == 0) {
+                System.out.println("상태: " + mental + "인 사람이 없습니다.");
+                System.out.println("상태를 다시 선택해주세요!");
+                continue;
+            }
+            avg /= count;
+
+            System.out.println("상태 : " + mental + ", 필수 과목 평균:" + avg);
+            break;
         }
-        avg /= count;
-
-        System.out.println("상태 : " + mental + ", 필수 과목 평균:" + avg);
-
     }
 
     private Subject getSubject(Student std) throws InterruptedException {

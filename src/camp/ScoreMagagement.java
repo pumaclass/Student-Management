@@ -37,7 +37,7 @@ public class ScoreMagagement extends Management {
             switch (input) {
                 case 1 -> createScore(); // 수강생의 과목별 시험 회차 및 점수 등록
                 case 2 -> updateRoundScoreBySubject(); // 수강생의 과목별 회차 점수 수정
-                case 3 -> inquireRoundGradeBySubject(); // 수강생의 특정 과목 회차별 등급 조회
+                case 3 -> studentAllSubjectScore(); // 수강생의 모든 과목 점수 조회
                 case 4 -> gradeAverage();
                 case 5 -> mentalMainAvgScore();
                 case 6 -> flag = false; // 메인 화면 이동
@@ -117,8 +117,8 @@ public class ScoreMagagement extends Management {
         System.out.println("\n점수 수정 성공!");
     }
 
-    // 수강생의 특정 과목 회차별 등급 조회
-    private void inquireRoundGradeBySubject() throws InterruptedException {
+    // 수강생의 모든 과목 점수 조회
+    private void studentAllSubjectScore() throws InterruptedException {
         // 기능 구현 (조회할 특정 과목)
         Student student = studentStore.get(verifyStudentId());
         System.out.println("회차별 등급을 조회합니다...");

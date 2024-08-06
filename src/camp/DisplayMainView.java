@@ -2,7 +2,7 @@ package camp;
 
 public class DisplayMainView {
 
-    public static void displayMainView() throws InterruptedException {
+    public static void displayMainView() throws InterruptedException{
         ScoreMagagement scoreMagagement = new ScoreMagagement();
         StudentManagement studentManagement = new StudentManagement();
         boolean flag = true;
@@ -12,7 +12,7 @@ public class DisplayMainView {
             System.out.println("1. 수강생 관리");
             System.out.println("2. 점수 관리");
             System.out.println("3. 프로그램 종료");
-            System.out.print("관리 항목을 선택하세요...");
+            System.out.println("관리 항목을 선택하세요...");
 
             int input = Util.filterInt();
 

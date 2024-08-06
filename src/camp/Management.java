@@ -94,19 +94,15 @@ public class Management {
         }
     }
 
-    protected String getStudentId() {
-        Scanner sc = new Scanner(System.in);
-        for(Student student : studentStore) {
+    protected String getStudentId() throws InterruptedException  {
+        for(Student student : studentStore)
             System.out.println("학생 ID : " + student.getStudentId() + ", 학생 이름 : "+ student.getStudentName());
-        }
 
-        String studentId = "ST" + Util.filterInt();
-
-        return studentId;
+        return "ST" + Util.filterInt();
     }
 
     // 입력된 수강생 번호와 일치하는 인덱스 값 반환
-    protected int verifyStudentId(){
+    protected int verifyStudentId() throws InterruptedException {
         String studentId; // 관리할 수강생 고유 번호
         int studentIdx = 0;
         boolean flag = true;

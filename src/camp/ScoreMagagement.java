@@ -189,29 +189,36 @@ public class ScoreMagagement extends Management {
 
     // 특정 상태인 수강생 필수 과목 평균
     private void mentalMainAvgScore() throws InterruptedException {
-        System.out.println("원하는 수강생의 상태를 입력해주세요.");
-        System.out.println("1. Green, 2. Yellow, 3. Red");
-        int num = Util.filterInt();
-        String mental = "";
-        double avg = 0;
+        while(true) {
+            System.out.println("원하는 수강생의 상태를 입력해주세요.");
+            System.out.println("1. Green, 2. Yellow, 3. Red");
+            int num = Util.filterInt();
+            String mental = "";
+            double avg = 0;
 
-        switch(num){
-            case 1 -> mental = "Green";
-            case 2 -> mental = "Yellow";
-            case 3 -> mental = "Red";
-        }
-
-        int count = 0;
-        for (Student student : studentStore) {
-            if (student.getMental().equals(mental)){
-                count++;
-                avg += student.averageScore();
+            switch(num){
+                case 1 -> mental = "Green";
+                case 2 -> mental = "Yellow";
+                case 3 -> mental = "Red";
             }
+
+            int count = 0;
+            for (Student student : studentStore) {
+                if (student.getMental().equals(mental)){
+                    count++;
+                    avg += student.averageScore();
+                }
+            }
+            if (count == 0) {
+                System.out.println("상태: " + mental + "인 사람이 없습니다.");
+                System.out.println("상태를 다시 선택해주세요!");
+                continue;
+            }
+            avg /= count;
+
+            System.out.println("상태 : " + mental + ", 필수 과목 평균:" + avg);
+            break;
         }
-        avg /= count;
-
-        System.out.println("상태 : " + mental + ", 필수 과목 평균:" + avg);
-
     }
 
     private Subject getSubject(Student std) throws InterruptedException {

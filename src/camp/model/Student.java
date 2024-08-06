@@ -48,7 +48,7 @@ public class Student { //수강생
         }
     }
 
-    public static String choiceMental(){
+    public static String choiceMental() throws InterruptedException {
         String mental;
         System.out.println("1: Green, 2: Yellow, 3: Red");
         int num;

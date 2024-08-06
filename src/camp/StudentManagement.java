@@ -14,7 +14,7 @@ public class StudentManagement extends Management{
     public StudentManagement() {
     }
 
-    public void displayStudentView() {
+    public void displayStudentView() throws InterruptedException {
         boolean flag = true;
         while (flag) {
             System.out.println("==================================");
@@ -25,7 +25,7 @@ public class StudentManagement extends Management{
             System.out.println("4. 수강생 목록 삭제");
             System.out.println("5. 상태별 수강생 목록 조회");
             System.out.println("6. 메인 화면 이동");
-            System.out.print("관리 항목을 선택하세요...");
+            System.out.println("관리 항목을 선택하세요...");
 
             int input = Util.filterInt();
 
@@ -45,7 +45,7 @@ public class StudentManagement extends Management{
     }
 
     // 수강생 등록
-    private void createStudent() {
+    private void createStudent() throws InterruptedException {
         List<Subject> mainSubjects = new ArrayList<Subject>();
         List<Subject> subSubjects = new ArrayList<Subject>();
 
@@ -191,13 +191,13 @@ public class StudentManagement extends Management{
     }
 
     // 수강생 목록 삭제
-    private void removeStudent() {
+    private void removeStudent() throws InterruptedException {
         System.out.println("학생을 삭제합니다...");
         studentStore.remove(verifyStudentId());
     }
 
     // 상태별 수강생 목록 조회
-    private void mentalSort() {
+    private void mentalSort() throws InterruptedException {
         System.out.println("상태별 수강생 목록을 조회합니다. ");
         System.out.println("조회하고 싶은 상태를 입력해주세요.");
         String mental = Student.choiceMental();
@@ -213,7 +213,7 @@ public class StudentManagement extends Management{
         else      System.out.println("상태가 " + mental + "인 학생이 없습니다.");
     }
 
-    private void changeStudentInfo() {
+    private void changeStudentInfo() throws InterruptedException {
         System.out.println("학생 정보를 수정합니다...");
         Student student = studentStore.get(verifyStudentId());
         String beforeName = "";

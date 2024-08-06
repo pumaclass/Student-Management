@@ -13,10 +13,10 @@ public class ScoreMagagement extends Management {
     // 스캐너
     private static Scanner sc = new Scanner(System.in);
 
-    public void displayScoreView() throws InterruptedException{
+    public void displayScoreView() throws InterruptedException {
         if(studentStore.isEmpty()){ // 등록 된 수강생이 없을 경우 이용할 수 없음
             System.out.println("등록 된 수강생이 없습니다. 수강생을 등록한 후 다시 이용해주세요.");
-            Thread.sleep(1000); // 1초 일시정지 후 동작
+            Thread.sleep(1000);
             return;
         }
 
@@ -30,7 +30,7 @@ public class ScoreMagagement extends Management {
             System.out.println("4. 과목별 통합 등급 조회");
             System.out.println("5. 상태별 수강생 필수 과목 평균");
             System.out.println("6. 메인 화면 이동");
-            System.out.print("관리 항목을 선택하세요...");
+            System.out.println("관리 항목을 선택하세요...");
 
             int input = Util.filterInt();
 
@@ -50,7 +50,7 @@ public class ScoreMagagement extends Management {
     }
 
     // 수강생의 과목별 시험 회차 및 점수 등록
-    private void createScore(){
+    private void createScore() throws InterruptedException {
         System.out.println("시험 점수를 등록합니다...");
 
         // 수강생 확인
@@ -83,7 +83,7 @@ public class ScoreMagagement extends Management {
     }
 
     // 수강생의 과목별 회차 점수 수정
-    private void updateRoundScoreBySubject() {
+    private void updateRoundScoreBySubject() throws InterruptedException {
         // 기능 구현 (수정할 과목 및 회차, 점수)
         System.out.println("시험 점수를 수정합니다...");
         Subject subject;
@@ -118,7 +118,7 @@ public class ScoreMagagement extends Management {
     }
 
     // 수강생의 특정 과목 회차별 등급 조회
-    private void inquireRoundGradeBySubject() {
+    private void inquireRoundGradeBySubject() throws InterruptedException {
         // 기능 구현 (조회할 특정 과목)
         Student student = studentStore.get(verifyStudentId());
         System.out.println("회차별 등급을 조회합니다...");
@@ -126,7 +126,7 @@ public class ScoreMagagement extends Management {
         System.out.println("\n등급 조회 성공!");
     }
 
-    private int getRound(Student student, String subject){
+    private int getRound(Student student, String subject) throws InterruptedException {
         int round;
 
         while(true){
@@ -141,7 +141,7 @@ public class ScoreMagagement extends Management {
         return round;
     }
 
-    private int getScore(){
+    private int getScore() throws InterruptedException {
         int score;
 
         while(true){
@@ -154,7 +154,7 @@ public class ScoreMagagement extends Management {
     }
 
     // 등급 편균 구하기
-    private void gradeAverage() {
+    private void gradeAverage() throws InterruptedException {
         System.out.println("원하는 과목의 번호를 입력해주세요.");
         System.out.println("1. Java, 2. 객체지향, 3. Spring, 4. JPA, 5. MySQL, 6. 디자인 패턴, 7.Spring Security, 8. Redis, 9. MongoDB");
         int num = Util.filterInt();
@@ -188,7 +188,7 @@ public class ScoreMagagement extends Management {
     }
 
     // 특정 상태인 수강생 필수 과목 평균
-    private void mentalMainAvgScore() {
+    private void mentalMainAvgScore() throws InterruptedException {
         System.out.println("원하는 수강생의 상태를 입력해주세요.");
         System.out.println("1. Green, 2. Yellow, 3. Red");
         int num = Util.filterInt();
@@ -214,7 +214,7 @@ public class ScoreMagagement extends Management {
 
     }
 
-    private Subject getSubject(Student std){
+    private Subject getSubject(Student std) throws InterruptedException {
         int idx;
         Subject subject;
 
@@ -229,6 +229,4 @@ public class ScoreMagagement extends Management {
         }
         return subject;
     }
-
-
 }

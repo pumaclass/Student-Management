@@ -173,31 +173,23 @@ public class StudentManagement extends Management{
         // 향상된for문:배열을 넘기면 배열안에있는 모든 원소를 탐색(조건없이 안에있는 수강생전부 보여줄거니까)
         // 6. 조회필수정보: 고유번호와 이름 -> private이라 직접적으로 접근 불가능 그래서 getter 사용
         // getter 메소드가 무엇인지 정리하면서 해보기 (고유번호/이름 을 반환하는 메소드이름)
-
-
         for (Student studentInfo : studentStore) {
             System.out.println("==================================");
             System.out.println("수강생 ID: " + studentInfo.getStudentId());
             System.out.println("수강생 이름: " + studentInfo.getStudentName());
             System.out.println("수강생 상태: " + studentInfo.getMental());
-
             System.out.print("필수과목: ");
             for (Subject mainSubject : studentInfo.getMainSubjects()) {
                 System.out.print("[ " + mainSubject.getSubjectName() + " ] ");
             }
-
             System.out.print("\n선택과목: ");
             for (Subject subSubject : studentInfo.getSubSubjects()) {
                 System.out.print("[ " + subSubject.getSubjectName() + " ] ");
             }
-
-
             System.out.println("\n==================================");
         }
-
         System.out.println("\n수강생 목록 조회 성공!");
     }
-
 
     // 수강생 목록 삭제
     private void removeStudent() {
@@ -208,46 +200,14 @@ public class StudentManagement extends Management{
     // 상태별 수강생 목록 조회
     private void mentalSort() {
         System.out.println("상태별 수강생 목록을 조회합니다. ");
-
-        while (true) {
-            System.out.println("조회하고 싶은 상태를 입력해주세요.");
-            System.out.println("1: Green, 2: Yellow, 3: Red");
-            int num = sc.nextInt();
-            if (num == 1) {
-                System.out.print("상태 - Green : ");
-                for (int i = 0; i < studentStore.size(); i++) {
-                    studentStore.get(i);
-                    Student studentInfo = studentStore.get(i);
-                    if (Objects.equals(studentInfo.getMental(), "Green")){
-                        System.out.print("[ " + studentInfo.getStudentName() + " ] "); }
-                }
-                System.out.println("\n상태가 Green 학생들 조회 성공!");
-                break;
-
-            } else if (num == 2) {
-                System.out.print("상태가 - Yellow : ");
-                for (int i = 0; i < studentStore.size(); i++) {
-                    studentStore.get(i);
-                    Student studentInfo = studentStore.get(i);
-                    if (Objects.equals(studentInfo.getMental(), "Yellow")){
-                        System.out.print("[ " + studentInfo.getStudentName() + " ] ");}
-                }
-                System.out.println("\n상태가 Yellow 학생들 조회 성공!");
-                break;
-            } else if (num == 3) {
-                System.out.print("상태 - Red : ");
-                for (int i = 0; i < studentStore.size(); i++) {
-                    studentStore.get(i);
-                    Student studentInfo = studentStore.get(i);
-                    if (Objects.equals(studentInfo.getMental(), "Red")){
-                        System.out.print("[ " + studentInfo.getStudentName() + " ] ");}
-                }
-                System.out.println("\n상태가 Red 학생들 조회 성공!");
-                break;
-            } else {
-                System.out.println("잘못 입력했습니다. 다시 입력해주세요. ");
-            }
+        System.out.println("조회하고 싶은 상태를 입력해주세요.");
+        String mental = Student.choiceMental();
+        System.out.println("조회할 상태 : " + mental);
+        for(Student student : studentStore){
+            if(student.getMental().equals(mental))
+                System.out.println("[ " + student.getStudentName() + " ] ");
         }
+        System.out.println("상태가 " + mental + "인 학생들 조회 성공!");
     }
 
     private void changeStudentInfo() {

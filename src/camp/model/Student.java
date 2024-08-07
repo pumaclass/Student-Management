@@ -123,6 +123,7 @@ public class Student { //수강생
     public double averageScore(String subjectName){
         double average = 0;
         int count = 0;
+        boolean flag = false;
 
         for(Subject sub : subjectList()){
             if(sub.getSubjectName().equals(subjectName)) {
@@ -130,8 +131,12 @@ public class Student { //수강생
                 if (score != -1) {
                     average += score;
                     count++;
+                    flag = true;
                 }
             }
+        }
+        if (!flag) {
+            return -1;
         }
 
         return average / count;

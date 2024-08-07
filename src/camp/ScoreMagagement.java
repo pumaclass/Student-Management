@@ -173,10 +173,15 @@ public class ScoreMagagement extends Management {
             case 9 -> subject = "MongoDB";
         }
 
+        int count = 0;
         for (Student student : studentStore) {
-            avg += student.averageScore(subject);
+            double n = student.averageScore(subject);
+            if ( n != -1) {
+                avg += n;
+                count++;
+            }
         }
-        avg /= studentStore.size();
+        avg /= count;
         if(num <= 5) {
             grade = Score.scoreToGrade((int)avg, SUBJECT_TYPE_MANDATORY);
         } else {
